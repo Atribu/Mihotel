@@ -22,17 +22,28 @@ async function render(pathname = "/") {
   );
 }
 
+function visibleText(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 test("server-renders the Mİ Hotel Boutique home page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
+  const text = visibleText(html);
   assert.match(html, /<title>Mİ Hotel Boutique<\/title>/i);
-  assert.match(html, /Şehrin ritminde, evinizin huzurunda\./);
-  assert.match(html, /Müsaitliği Ara/);
-  assert.match(html, /Eco Oda/);
-  assert.match(html, /Aile Odası/);
+  assert.match(text, /Konforu hissedin, hikâyenizi yaşayın\./);
+  assert.match(text, /Müsaitliği Ara/);
+  assert.match(text, /Eco Oda/);
+  assert.match(text, /Aile Odası/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
@@ -40,6 +51,7 @@ test("server-renders every primary route", async () => {
   const routes = [
     ["/odalar", /Odalarımız/],
     ["/hakkimizda", /Konforu sadeleştiren bir butik otel\./],
+    ["/galeri", /Otelimizi ve odalarımızı yakından keşfedin\./],
     ["/konum-iletisim", /Konaklamanız için temel bilgiler\./],
   ];
 
@@ -47,6 +59,47 @@ test("server-renders every primary route", async () => {
     const response = await render(pathname);
     assert.equal(response.status, 200, pathname);
     assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-    assert.match(await response.text(), expectedContent);
+    assert.match(visibleText(await response.text()), expectedContent);
+  }
+});
+
+test("server-renders the complete categorized photo gallery", async () => {
+  const response = await render("/galeri");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  const text = visibleText(html);
+  const galleryItems = html.match(/data-gallery-item="true"/g) ?? [];
+
+  assert.equal(galleryItems.length, 44);
+  assert.match(text, /Tümü44/);
+  assert.match(text, /Otel &amp; Ortak Alanlar13/);
+  assert.match(text, /Eco Oda9/);
+  assert.match(text, /Double Oda6/);
+  assert.match(text, /Triple Oda6/);
+  assert.match(text, /Aile Odası10/);
+  assert.match(html, /\/images\/gallery\/hotel\/genel-13\.jpg/);
+  assert.match(html, /\/images\/rooms\/eco\/105-9\.jpg/);
+  assert.match(html, /\/images\/rooms\/family\/107-10\.jpg/);
+  assert.match(html, /href="\/galeri"/);
+  assert.doesNotMatch(html, /href="\/#galeri"/);
+});
+
+test("server-renders every room detail route with its verified content", async () => {
+  const routes = [
+    ["/odalar/eco-oda", /Eco Oda/, /9 m²/],
+    ["/odalar/double-oda", /Double Oda/, /11 m²/],
+    ["/odalar/triple-oda", /Triple Oda/, /14 m²/],
+    ["/odalar/aile-odasi", /Aile Odası/, /30 m²/],
+  ];
+
+  for (const [pathname, roomName, roomSize] of routes) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200, pathname);
+    const text = visibleText(await response.text());
+    assert.match(text, roomName);
+    assert.match(text, roomSize);
+    assert.match(text, /Bunları da beğenebilirsiniz/);
+    assert.match(text, /Müsaitliği Ara/);
   }
 });

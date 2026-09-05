@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { PhoneCall } from "lucide-react";
-import { Montserrat, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import { headers } from "next/headers";
+import { ConnexeaseChat } from "./components/ConnexeaseChat";
 import { phoneHref, phoneNumber } from "./lib/site-data";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
 });
 
@@ -58,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body className={`${montserrat.variable} ${playfair.variable}`}>
+      <body className={`${inter.variable} ${playfair.variable}`}>
         {children}
         <a
           className="floating-phone"
@@ -68,6 +69,7 @@ export default function RootLayout({
         >
           <PhoneCall aria-hidden="true" size={25} strokeWidth={1.8} />
         </a>
+        <ConnexeaseChat />
       </body>
     </html>
   );

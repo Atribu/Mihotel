@@ -1,8 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  Bath,
+  Check,
+  Clock3,
+  Coffee,
+  ConciergeBell,
+  Droplets,
+  Maximize2,
+  Refrigerator,
+  ShieldCheck,
+  Shirt,
+  Sparkles,
+  Wifi,
+} from "lucide-react";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { BookingWidget } from "../../components/BookingWidget";
+import { RoomGallery } from "../../components/RoomGallery";
 import { SiteFooter } from "../../components/SiteFooter";
 import { SiteHeader } from "../../components/SiteHeader";
 import { getRoomBySlug, rooms } from "../../lib/site-data";
@@ -10,6 +25,19 @@ import { getRoomBySlug, rooms } from "../../lib/site-data";
 type RoomPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+const verifiedAmenities = [
+  { icon: Wifi, label: "Ücretsiz Wi-Fi" },
+  { icon: ShieldCheck, label: "Oda kasası" },
+  { icon: Coffee, label: "Kettle" },
+  { icon: Refrigerator, label: "Minibar" },
+  { icon: Droplets, label: "Ücretsiz su" },
+  { icon: Sparkles, label: "Hijyen ürünleri" },
+  { icon: Bath, label: "Terlik" },
+  { icon: ConciergeBell, label: "Room service" },
+  { icon: Shirt, label: "Çamaşırhane" },
+  { icon: Clock3, label: "7/24 resepsiyon" },
+] as const;
 
 export function generateStaticParams() {
   return rooms.map((room) => ({ slug: room.slug }));
@@ -55,71 +83,118 @@ export default async function RoomPage({ params }: RoomPageProps) {
     notFound();
   }
 
+  const otherRooms = rooms.filter((item) => item.slug !== room.slug);
+  const detailItems = Array.from(
+    new Set([
+      ...room.amenities,
+      "Terlik ve temel hijyen ürünleri",
+      "Minibarda ücretsiz su",
+      "7/24 resepsiyon desteği",
+    ]),
+  );
+
   return (
     <>
-      <SiteHeader />
-      <main>
-        <section className="room-page-hero">
-          <img src={room.cover} alt={`${room.name} genel görünümü`} />
-          <div className="room-page-hero__veil" />
-          <div className="room-page-hero__content shell">
-            <nav className="breadcrumb" aria-label="Sayfa yolu">
-              <Link href="/">Ana Sayfa</Link>
-              <span aria-hidden="true">/</span>
-              <Link href="/odalar">Odalar</Link>
-              <span aria-hidden="true">/</span>
-              <span>{room.name}</span>
-            </nav>
-            <p className="eyebrow eyebrow--light">{room.size}</p>
-            <h1>{room.name}</h1>
-            <p>{room.description}</p>
+      <SiteHeader activePage="rooms" />
+      <main className="room-reference">
+        <section className="room-reference__intro shell">
+          <nav className="room-reference__breadcrumb" aria-label="Sayfa yolu">
+            <Link href="/">Ana Sayfa</Link>
+            <span aria-hidden="true">›</span>
+            <Link href="/odalar">Odalar</Link>
+            <span aria-hidden="true">›</span>
+            <span>{room.name}</span>
+          </nav>
+
+          <div className="room-reference__heading">
+            <div>
+              <p>Mİ Hotel Boutique</p>
+              <h1>{room.name}</h1>
+              <span>{room.description}</span>
+            </div>
+            <Link href="/odalar">Tüm odaları görüntüle</Link>
+          </div>
+
+          <div className="room-reference__quick-facts" aria-label="Oda kısa bilgileri">
+            <span>
+              <Maximize2 aria-hidden="true" size={17} strokeWidth={1.45} />
+              {room.size}
+            </span>
+            <span>
+              <Wifi aria-hidden="true" size={17} strokeWidth={1.45} />
+              Ücretsiz Wi-Fi
+            </span>
+            <span>
+              <Refrigerator aria-hidden="true" size={17} strokeWidth={1.45} />
+              Ücretsiz minibar suyu
+            </span>
           </div>
         </section>
 
-        <section className="room-page-intro section shell">
-          <div>
-            <p className="eyebrow">Oda detayları</p>
-            <h2>Şehir konaklamanız için sade ve kullanışlı.</h2>
-            <p className="lead-copy">
-              Mİ Hotel Boutique’un özenli ve işlevsel yaklaşımını yansıtan {room.name},
-              konaklamanız boyunca ihtiyaç duyacağınız temel olanakları bir araya getirir.
-            </p>
-          </div>
-          <div className="room-facts" aria-label="Konaklama bilgileri">
-            <div><span>Oda büyüklüğü</span><strong>{room.size}</strong></div>
-            <div><span>Giriş</span><strong>14:00</strong></div>
-            <div><span>Çıkış</span><strong>12:00</strong></div>
-            <div><span>Resepsiyon</span><strong>7/24</strong></div>
-          </div>
-        </section>
+        <RoomGallery roomName={room.name} images={room.gallery} />
 
-        <section className="room-page-gallery shell" aria-label={`${room.name} fotoğrafları`}>
-          {room.gallery.map((image, index) => (
-            <img
-              src={image}
-              alt={`${room.name} ${index === 0 ? "genel görünümü" : index === 1 ? "oda detayı" : "banyo alanı"}`}
-              loading={index === 0 ? "eager" : "lazy"}
-              key={image}
-            />
+        <section className="room-reference__amenities shell" aria-label="Oda olanakları">
+          {verifiedAmenities.map(({ icon: Icon, label }) => (
+            <div key={label}>
+              <Icon aria-hidden="true" size={22} strokeWidth={1.35} />
+              <span>{label}</span>
+            </div>
           ))}
         </section>
 
-        <section className="room-amenities section shell" aria-labelledby="amenities-title">
-          <div className="section-heading">
-            <p className="eyebrow">Oda olanakları</p>
-            <h2 id="amenities-title">Konforunuz için odanızda.</h2>
-          </div>
-          <div className="room-amenities__grid">
-            {room.amenities.map((amenity) => (
-              <div key={amenity}><span aria-hidden="true">✓</span>{amenity}</div>
-            ))}
-            <div><span aria-hidden="true">✓</span>Terlik ve hijyen ürünleri</div>
-            <div><span aria-hidden="true">✓</span>Ücretsiz minibar suyu</div>
+        <section className="room-reference__details">
+          <div className="room-reference__details-inner shell">
+            <article className="room-reference__about">
+              <p className="room-reference__eyebrow">Oda hakkında</p>
+              <h2>{room.name} deneyimi</h2>
+              <p>
+                {room.description} Mİ Hotel Boutique’un sade ve işlevsel yaklaşımıyla
+                hazırlanan odanızda şehir konaklamanız için gereken temel olanaklar
+                bir aradadır.
+              </p>
+              <ul>
+                {detailItems.map((item) => (
+                  <li key={item}>
+                    <Check aria-hidden="true" size={15} strokeWidth={1.7} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            <aside className="room-reference__booking" aria-label="Bu oda için rezervasyon arama">
+              <p>Doğrudan rezervasyon</p>
+              <h2>Konaklamanızı planlayın</h2>
+              <span>Güncel fiyat ve müsaitliği güvenli rezervasyon sayfamızda görüntüleyin.</span>
+              <BookingWidget />
+              <small>Standart giriş 14:00 · Çıkış 12:00</small>
+            </aside>
           </div>
         </section>
 
-        <section className="booking-panel booking-panel--room shell" aria-label="Rezervasyon arama">
-          <BookingWidget />
+        <section className="room-reference__recommendations shell" aria-labelledby="other-rooms-title">
+          <div className="room-reference__section-heading">
+            <div>
+              <p className="room-reference__eyebrow">Diğer seçenekler</p>
+              <h2 id="other-rooms-title">Bunları da beğenebilirsiniz</h2>
+            </div>
+            <Link href="/odalar">Tüm odalar</Link>
+          </div>
+
+          <div className="room-reference__recommendation-grid">
+            {otherRooms.map((item) => (
+              <article key={item.slug}>
+                <Link href={`/odalar/${item.slug}`}>
+                  <img src={item.cover} alt={`${item.name} genel görünümü`} loading="lazy" />
+                </Link>
+                <div>
+                  <h3><Link href={`/odalar/${item.slug}`}>{item.name}</Link></h3>
+                  <span>{item.size}</span>
+                  <p>{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
       </main>
       <SiteFooter />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ImagePageHero } from "../components/ImagePageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { hotelAddress, mapsEmbedUrl, mapsUrl, phoneHref, phoneNumber } from "../lib/site-data";
@@ -11,15 +12,18 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <SiteHeader />
-      <main>
-        <section className="page-hero page-hero--center">
-          <div className="shell page-hero__inner">
-            <p className="eyebrow">Konum &amp; İletişim</p>
-            <h1>Konaklamanız için temel bilgiler.</h1>
-            <p>Giriş, çıkış ve resepsiyon hizmetleri hakkında ihtiyaç duyacağınız bilgiler burada.</p>
-          </div>
-        </section>
+      <SiteHeader overlay activePage="contact" />
+      <main className="reference-home reference-inner-page contact-page">
+        <ImagePageHero
+          id="contact-page-title"
+          eyebrow="Konum & İletişim"
+          title="Konaklamanız için"
+          italic="temel bilgiler."
+          description="Giriş, çıkış ve resepsiyon hizmetleri hakkında ihtiyaç duyacağınız bilgiler burada."
+          image="/images/mi-hotel-exterior.jpg"
+          imageAlt="Mİ Hotel Boutique dış cephesi"
+          variant="contact"
+        />
 
         <section className="contact-layout section shell">
           <div className="contact-map">
@@ -52,12 +56,12 @@ export default function ContactPage() {
 
         <section className="contact-pending shell">
           <div>
-            <p className="eyebrow">Adres &amp; Yol Tarifi</p>
+            <p className="reference-kicker">Adres &amp; Yol Tarifi</p>
             <h2>Mİ Hotel Boutique’a ulaşın.</h2>
             <address>{hotelAddress}</address>
             <a className="contact-phone-link" href={phoneHref}>{phoneNumber}</a>
           </div>
-          <a className="button button--gold" href={mapsUrl} target="_blank" rel="noreferrer">
+          <a className="reference-button reference-button--gold" href={mapsUrl} target="_blank" rel="noreferrer">
             Yol Tarifi Al
           </a>
         </section>

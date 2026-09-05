@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ImagePageHero } from "../components/ImagePageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
@@ -11,17 +12,18 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <SiteHeader />
-      <main>
-        <section className="page-hero page-hero--center">
-          <div className="shell page-hero__inner">
-            <p className="eyebrow">Hakkımızda</p>
-            <h1>Konforu sadeleştiren bir butik otel.</h1>
-            <p>
-              İyi bir konaklamanın; temiz, düzenli ve ihtiyaçlara cevap veren ayrıntılarla başladığına inanıyoruz.
-            </p>
-          </div>
-        </section>
+      <SiteHeader overlay activePage="about" />
+      <main className="reference-home reference-inner-page about-page">
+        <ImagePageHero
+          id="about-page-title"
+          eyebrow="Hakkımızda"
+          title="Konforu sadeleştiren"
+          italic="bir butik otel."
+          description="İyi bir konaklamanın; temiz, düzenli ve ihtiyaçlara cevap veren ayrıntılarla başladığına inanıyoruz."
+          image="/images/hotel-reception.jpg"
+          imageAlt="Mİ Hotel Boutique resepsiyon alanı"
+          variant="about"
+        />
 
         <section className="about-feature shell">
           <img src="/images/hotel-lobby-wide.jpg" alt="Mİ Hotel Boutique resepsiyon ve lobi alanı" />
@@ -29,8 +31,8 @@ export default function AboutPage() {
 
         <section className="section about-story shell">
           <div>
-            <p className="eyebrow">Yaklaşımımız</p>
-            <h2>İhtiyacınız olan her şey, kararında.</h2>
+            <p className="reference-kicker">Yaklaşımımız</p>
+            <h2>İhtiyacınız olan her şey, <em>kararında.</em></h2>
           </div>
           <div className="about-story__copy">
             <p>
@@ -45,8 +47,8 @@ export default function AboutPage() {
         <section className="values-section section">
           <div className="shell">
             <div className="section-heading section-heading--center">
-              <p className="eyebrow">Mİ deneyimi</p>
-              <h2>Üç temel değer.</h2>
+              <p className="reference-kicker">Mİ deneyimi</p>
+              <h2>Üç temel <em>değer.</em></h2>
             </div>
             <div className="values-grid">
               {[
