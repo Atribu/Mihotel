@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
 import { PhoneCall } from "lucide-react";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Bodoni_Moda, Montserrat } from "next/font/google";
 import { headers } from "next/headers";
 import { ConnexeaseChat } from "./components/ConnexeaseChat";
 import { phoneHref, phoneNumber } from "./lib/site-data";
 import "./globals.css";
 
-const inter = Inter({
+const montserrat = Montserrat({
   variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
+const headingFont = Bodoni_Moda({
   variable: "--font-playfair",
   subsets: ["latin", "latin-ext"],
+  weight: "variable",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
 });
 
 const siteDescription =
@@ -59,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body className={`${inter.variable} ${playfair.variable}`}>
+      <body className={`${montserrat.variable} ${headingFont.variable}`}>
         {children}
         <a
           className="floating-phone"
