@@ -77,7 +77,7 @@ export function RoomGallery({ roomName, images }: RoomGalleryProps) {
               aria-current={index === inlineIndex ? "true" : undefined}
               key={image}
             >
-              <img src={image} alt="" loading={index < 5 ? "eager" : "lazy"} />
+              <img src={image} alt="" loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
@@ -92,6 +92,8 @@ export function RoomGallery({ roomName, images }: RoomGalleryProps) {
             <img
               src={inlineImage}
               alt={`${roomName} fotoğrafı ${inlineIndex + 1} / ${images.length}`}
+              loading="eager"
+              fetchPriority="high"
             />
             <span>
               <Images aria-hidden="true" size={17} strokeWidth={1.6} />
@@ -153,7 +155,11 @@ export function RoomGallery({ roomName, images }: RoomGalleryProps) {
               touchStartX.current = null;
             }}
           >
-            <img src={activeImage} alt={`${roomName} fotoğrafı ${activeIndex + 1} / ${images.length}`} />
+            <img
+              src={activeImage}
+              alt={`${roomName} fotoğrafı ${activeIndex + 1} / ${images.length}`}
+              decoding="async"
+            />
           </figure>
 
           <button className="gallery-lightbox__arrow gallery-lightbox__arrow--next" type="button" onClick={showNext} aria-label="Sonraki fotoğraf">

@@ -1,12 +1,46 @@
 import Link from "next/link";
 import { bookingUrl, hotelAddress, phoneHref, phoneNumber } from "../lib/site-data";
 
+function FooterBrandLogo() {
+  return (
+    <svg
+      className="site-footer__brand-logo"
+      viewBox="0 0 219 108"
+      role="img"
+      aria-label="Mİ Hotel Boutique"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <defs>
+        <filter
+          id="mi-footer-logo-alpha"
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          colorInterpolationFilters="sRGB"
+        >
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -0.2126 -0.7152 -0.0722 0 1"
+          />
+        </filter>
+      </defs>
+      <image
+        href="/brand/mi-hotel-logo.png"
+        width="219"
+        height="108"
+        filter="url(#mi-footer-logo-alpha)"
+      />
+    </svg>
+  );
+}
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="site-footer__main shell">
         <div className="site-footer__brand">
-          <img src="/brand/mi-hotel-logo.png" alt="Mİ Hotel Boutique" />
+          <FooterBrandLogo />
           <p>Sade, işlevsel ve özenli bir şehir konaklaması.</p>
           <address className="site-footer__contact">
             <span>{hotelAddress}</span>
@@ -18,7 +52,6 @@ export function SiteFooter() {
           <strong>Keşfet</strong>
           <Link href="/">Ana Sayfa</Link>
           <Link href="/odalar">Odalar</Link>
-          <Link href="/hakkimizda">Hakkımızda</Link>
           <Link href="/galeri">Galeri</Link>
           <Link href="/konum-iletisim">Konum &amp; İletişim</Link>
         </nav>

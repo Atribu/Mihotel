@@ -29,7 +29,7 @@ const hotelPhotoDescriptions = [
 
 const hotelImages: readonly HotelGalleryItem[] = hotelPhotoDescriptions.map((description, index) => ({
   id: `hotel-${index + 1}`,
-  src: `/images/gallery/hotel/genel-${String(index + 1).padStart(2, "0")}.jpg`,
+  src: `/images/gallery/hotel/genel-${String(index + 1).padStart(2, "0")}.webp`,
   category: "hotel",
   categoryLabel: "Otel & Ortak Alanlar",
   caption: description,
@@ -65,7 +65,7 @@ export default function GalleryPage() {
           title="Otelimizi ve odalarımızı"
           italic="yakından keşfedin."
           description="Mİ Hotel Boutique'in ortak alanlarından dört farklı oda tipine kadar tüm fotoğraflarını inceleyin."
-          image="/images/gallery/hotel/genel-08.jpg"
+          image="/images/gallery/hotel/genel-08.webp"
           imageAlt="Mİ Hotel Boutique lobi ve resepsiyon alanı"
           variant="gallery"
         />

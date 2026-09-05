@@ -23,7 +23,13 @@ export function ImagePageHero({
 
   return (
     <section className={`reference-hero image-page-hero${variantClass}`} aria-labelledby={id}>
-      <img className="reference-hero__image" src={image} alt={imageAlt} />
+      <img
+        className="reference-hero__image"
+        src={image}
+        alt={imageAlt}
+        loading="eager"
+        fetchPriority="high"
+      />
       <div className="reference-hero__veil" />
       <div className="reference-hero__content shell">
         <p className="reference-kicker reference-kicker--light">{eyebrow}</p>

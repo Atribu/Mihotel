@@ -20,7 +20,7 @@ export default function ContactPage() {
           title="Konaklamanız için"
           italic="temel bilgiler."
           description="Giriş, çıkış ve resepsiyon hizmetleri hakkında ihtiyaç duyacağınız bilgiler burada."
-          image="/images/mi-hotel-exterior.jpg"
+          image="/images/mi-hotel-exterior.webp"
           imageAlt="Mİ Hotel Boutique dış cephesi"
           variant="contact"
         />

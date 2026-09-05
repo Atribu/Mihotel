@@ -50,8 +50,12 @@ export default function RoomsPage() {
       <main className="reference-home rooms-catalog">
         <section className="rooms-catalog__hero">
           <img
-            src="/images/room-family.jpg"
+            src="/images/room-family.webp"
             alt="Mİ Hotel Boutique Aile Odası"
+            width={1800}
+            height={1200}
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="rooms-catalog__hero-veil" />
           <div className="rooms-catalog__hero-copy shell">
@@ -104,7 +108,8 @@ export default function RoomsPage() {
                 <img
                   src={room.cover}
                   alt={`${room.name} genel görünümü`}
-                  loading={index < 3 ? "eager" : "lazy"}
+                  loading="lazy"
+                  decoding="async"
                 />
               </Link>
               <div className="rooms-catalog-card__body">

@@ -79,7 +79,6 @@ export function SiteHeader({
 
         <nav className="desktop-nav" aria-label="Ana menü">
           <Link href="/" aria-current={activePage === "home" ? "page" : undefined}>Ana Sayfa</Link>
-          <Link href="/hakkimizda" aria-current={activePage === "about" ? "page" : undefined}>Hakkımızda</Link>
           <div className="nav-dropdown">
             <Link href="/odalar" aria-haspopup="true" aria-current={activePage === "rooms" ? "page" : undefined}>
               Odalar <ChevronDown aria-hidden="true" size={14} strokeWidth={1.8} />
@@ -114,7 +113,6 @@ export function SiteHeader({
                 <Link href={`/odalar/${room.slug}`} key={room.slug}>{room.name}</Link>
               ))}
             </div>
-            <Link href="/hakkimizda">Hakkımızda</Link>
             <Link href="/galeri">Galeri</Link>
             <Link href="/konum-iletisim">Konum &amp; İletişim</Link>
             <a href={phoneHref}>Ara: {phoneNumber}</a>

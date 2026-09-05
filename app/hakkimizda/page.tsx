@@ -20,13 +20,18 @@ export default function AboutPage() {
           title="Konforu sadeleştiren"
           italic="bir butik otel."
           description="İyi bir konaklamanın; temiz, düzenli ve ihtiyaçlara cevap veren ayrıntılarla başladığına inanıyoruz."
-          image="/images/hotel-reception.jpg"
+          image="/images/hotel-reception.webp"
           imageAlt="Mİ Hotel Boutique resepsiyon alanı"
           variant="about"
         />
 
         <section className="about-feature shell">
-          <img src="/images/hotel-lobby-wide.jpg" alt="Mİ Hotel Boutique resepsiyon ve lobi alanı" />
+          <img
+            src="/images/hotel-lobby-wide.webp"
+            alt="Mİ Hotel Boutique resepsiyon ve lobi alanı"
+            loading="lazy"
+            decoding="async"
+          />
         </section>
 
         <section className="section about-story shell">
@@ -67,8 +72,8 @@ export default function AboutPage() {
         </section>
 
         <section className="about-gallery section shell">
-          <img src="/images/hotel-corridor.jpg" alt="Mİ Hotel Boutique koridoru" loading="lazy" />
-          <img src="/images/hotel-stairs.jpg" alt="Mİ Hotel Boutique merdiven alanı" loading="lazy" />
+          <img src="/images/hotel-corridor.webp" alt="Mİ Hotel Boutique koridoru" loading="lazy" decoding="async" />
+          <img src="/images/hotel-stairs.webp" alt="Mİ Hotel Boutique merdiven alanı" loading="lazy" decoding="async" />
         </section>
       </main>
       <SiteFooter />

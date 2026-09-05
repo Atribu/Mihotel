@@ -21,41 +21,41 @@ const experiences = [
   {
     title: "7/24 Resepsiyon",
     description: "Günün her saati ihtiyaçlarınıza yardımcı olan ekip.",
-    image: "/images/hotel-reception.jpg",
+    image: "/images/hotel-reception.webp",
     Icon: Clock3,
   },
   {
     title: "Ücretsiz Wi-Fi",
     description: "Otelin tüm alanlarında kesintisiz internet erişimi.",
-    image: "/images/hotel-lounge.jpg",
+    image: "/images/hotel-lounge.webp",
     Icon: Wifi,
   },
   {
     title: "Minibar Suyu",
     description: "Odanızdaki minibar suyu konaklamanıza dahildir.",
-    image: "/images/room-eco-detail.jpg",
+    image: "/images/room-eco-detail.webp",
     Icon: GlassWater,
   },
   {
     title: "Room Service",
     description: "Konaklamanızı kolaylaştıran oda servisi hizmeti.",
-    image: "/images/hotel-seating.jpg",
+    image: "/images/hotel-seating.webp",
     Icon: UtensilsCrossed,
   },
   {
     title: "Çamaşırhane",
     description: "Talebiniz doğrultusunda sunulan ücretli hizmet.",
-    image: "/images/hotel-corridor.jpg",
+    image: "/images/hotel-corridor.webp",
     Icon: WashingMachine,
   },
 ] as const;
 
 const hotelSpaces = [
-  ["/images/hotel-lobby-wide.jpg", "Resepsiyon", "Karşılama alanı"],
-  ["/images/hotel-lounge.jpg", "Lobi", "Dinlenme alanı"],
-  ["/images/hotel-seating.jpg", "Oturma Alanı", "Sakin bir mola"],
-  ["/images/hotel-stairs.jpg", "Ortak Alanlar", "Otelin detayları"],
-  ["/images/mi-hotel-exterior.jpg", "Mİ Hotel", "Muratpaşa, Antalya"],
+  ["/images/hotel-lobby-wide.webp", "Resepsiyon", "Karşılama alanı"],
+  ["/images/hotel-lounge.webp", "Lobi", "Dinlenme alanı"],
+  ["/images/hotel-seating.webp", "Oturma Alanı", "Sakin bir mola"],
+  ["/images/hotel-stairs.webp", "Ortak Alanlar", "Otelin detayları"],
+  ["/images/mi-hotel-exterior.webp", "Mİ Hotel", "Muratpaşa, Antalya"],
 ] as const;
 
 export default function Home() {
@@ -66,8 +66,14 @@ export default function Home() {
         <section className="reference-hero" aria-labelledby="hero-title">
           <img
             className="reference-hero__image"
-            src="/images/mi-hotel-exterior.jpg"
-            alt="Mİ Hotel Boutique dış cephesi"
+            src="/images/hero-lobby-relief-clean.webp"
+            srcSet="/images/hero-lobby-relief-clean-720.webp 720w, /images/hero-lobby-relief-clean-1280.webp 1280w, /images/hero-lobby-relief-clean.webp 1800w"
+            sizes="100vw"
+            alt="Mİ Hotel Boutique mitolojik kabartmalı lobi ve resepsiyon alanı"
+            width={1800}
+            height={1200}
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="reference-hero__veil" />
           <div className="reference-hero__content shell">
@@ -90,7 +96,7 @@ export default function Home() {
               {experiences.map(({ title, description, image, Icon }) => (
                 <article className="reference-experience" key={title}>
                   <div className="reference-experience__image">
-                    <img src={image} alt="" />
+                    <img src={image} alt="" loading="lazy" decoding="async" />
                   </div>
                   <span className="reference-experience__icon" aria-hidden="true">
                     <Icon size={18} strokeWidth={1.45} />
@@ -108,7 +114,12 @@ export default function Home() {
         <div className="reference-gallery-band">
           <section className="reference-tour reference-gallery-promo" aria-labelledby="gallery-promo-title">
             <div className="reference-tour__image">
-              <img src="/images/hotel-lobby-wide.jpg" alt="Mİ Hotel Boutique lobi ve resepsiyon alanı" />
+              <img
+                src="/images/hotel-lobby-wide.webp"
+                alt="Mİ Hotel Boutique lobi ve resepsiyon alanı"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
             <div className="reference-tour__copy">
               <p className="reference-kicker">Otel galerisi</p>
@@ -133,7 +144,12 @@ export default function Home() {
           <div className="reference-room-showcase">
             <article className="reference-featured-room">
               <Link className="reference-featured-room__image" href="/odalar">
-                <img src="/images/room-family.jpg" alt="Mİ Hotel Boutique oda seçenekleri" />
+                <img
+                  src="/images/room-family.webp"
+                  alt="Mİ Hotel Boutique oda seçenekleri"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <span>Odalarımız</span>
               </Link>
               <div className="reference-featured-room__body">
@@ -153,7 +169,12 @@ export default function Home() {
               {rooms.map((room) => (
                 <article className="reference-compact-room" key={room.slug}>
                   <Link href={`/odalar/${room.slug}`} className="reference-compact-room__image">
-                    <img src={room.cover} alt={`${room.name} iç mekânı`} />
+                    <img
+                      src={room.cover}
+                      alt={`${room.name} iç mekânı`}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </Link>
                   <div>
                     <h3>{room.name}</h3>
@@ -189,7 +210,12 @@ export default function Home() {
 
         <section className="reference-about" aria-labelledby="about-title">
           <div className="reference-about__image">
-            <img src="/images/hotel-reception.jpg" alt="Mİ Hotel Boutique resepsiyon alanı" />
+            <img
+              src="/images/hotel-reception.webp"
+              alt="Mİ Hotel Boutique resepsiyon alanı"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div className="reference-about__copy">
             <p className="reference-kicker">Hakkımızda</p>
@@ -207,7 +233,12 @@ export default function Home() {
             <div className="reference-spaces__grid">
               {hotelSpaces.map(([image, title, description]) => (
                 <article key={title}>
-                  <img src={image} alt={`${title} — ${description}`} />
+                  <img
+                    src={image}
+                    alt={`${title} — ${description}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <h3>{title}</h3>
                   <p>{description}</p>
                 </article>

@@ -78,9 +78,9 @@ test("server-renders the complete categorized photo gallery", async () => {
   assert.match(text, /Double Oda6/);
   assert.match(text, /Triple Oda6/);
   assert.match(text, /Aile Odası10/);
-  assert.match(html, /\/images\/gallery\/hotel\/genel-13\.jpg/);
-  assert.match(html, /\/images\/rooms\/eco\/105-9\.jpg/);
-  assert.match(html, /\/images\/rooms\/family\/107-10\.jpg/);
+  assert.match(html, /\/images\/gallery\/hotel\/genel-13\.webp/);
+  assert.match(html, /\/images\/rooms\/eco\/105-9\.webp/);
+  assert.match(html, /\/images\/rooms\/family\/107-10\.webp/);
   assert.match(html, /href="\/galeri"/);
   assert.doesNotMatch(html, /href="\/#galeri"/);
 });

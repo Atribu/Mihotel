@@ -140,7 +140,7 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
             data-gallery-item="true"
             key={item.id}
           >
-            <img src={item.src} alt="" loading={index < 4 ? "eager" : "lazy"} decoding="async" />
+            <img src={item.src} alt="" loading="lazy" decoding="async" />
             <span className="hotel-gallery__item-copy">
               <small>{item.categoryLabel}</small>
               <strong>{item.caption}</strong>
@@ -188,7 +188,7 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
               touchStartX.current = null;
             }}
           >
-            <img src={activeItem.src} alt={activeItem.alt} />
+            <img src={activeItem.src} alt={activeItem.alt} decoding="async" />
             <figcaption>{activeItem.caption}</figcaption>
           </figure>
 

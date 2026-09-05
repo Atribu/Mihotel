@@ -810,7 +810,7 @@ h3 {
 .page-hero--rooms {
   background:
     linear-gradient(90deg, rgba(252, 250, 247, 0.97), rgba(252, 250, 247, 0.7)),
-    url("/images/room-family.jpg") center 58% / cover;
+    url("/images/room-family.webp") center 58% / cover;
 }
 
 .booking-panel {
@@ -9341,5 +9341,179 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .site-footer__partner img {
     transition: none;
+  }
+}
+
+/* The footer wordmark keeps the source artwork while removing its white canvas. */
+.site-footer__brand-logo {
+  width: 145px;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* First-party live-chat launcher aligned with the floating phone action. */
+html[data-mi-hotel-chat="closed"] iframe#web-messenger-container {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html[data-mi-hotel-chat="open"] iframe#web-messenger-container {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.floating-chat {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(197, 160, 89, 0.72);
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: 0 18px 44px rgba(103, 84, 80, 0.22);
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px) scale(0.94);
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.floating-chat--ready {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.floating-chat--ready:hover,
+.floating-chat--ready:focus-visible {
+  background: var(--gold-dark);
+  box-shadow: 0 20px 52px rgba(103, 84, 80, 0.3);
+  transform: translateY(-2px);
+}
+
+.floating-chat:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.floating-chat[hidden] {
+  display: none;
+}
+
+.floating-chat svg {
+  width: 28px;
+  height: 28px;
+}
+
+@media (max-width: 700px) {
+  .site-footer__brand-logo {
+    width: 128px;
+  }
+}
+
+@media (max-width: 760px) {
+  .floating-chat {
+    width: 58px;
+    height: 58px;
+  }
+
+  .floating-chat svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 460px) {
+  .floating-chat {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-chat {
+    transition: none;
+  }
+}
+
+/* Give the homepage opening photograph a taller, more immersive frame. */
+@media (min-width: 701px) {
+  .reference-home--landing > .reference-hero {
+    height: clamp(700px, 87vh, 1000px);
+    height: clamp(700px, 87svh, 1000px);
+    min-height: clamp(700px, 87vh, 1000px);
+    min-height: clamp(700px, 87svh, 1000px);
+  }
+
+  .reference-home--landing > .reference-hero:has(.booking-widget__ages) {
+    height: clamp(790px, 95vh, 1100px);
+    height: clamp(790px, 95svh, 1100px);
+    min-height: clamp(790px, 95vh, 1100px);
+    min-height: clamp(790px, 95svh, 1100px);
+  }
+}
+
+@media (max-width: 700px) {
+  .reference-home--landing > .reference-hero {
+    min-height: max(760px, 92vh);
+    min-height: max(760px, 92svh);
+  }
+}
+
+.reference-home--landing > .reference-hero .reference-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 54% 52%;
+}
+
+@media (max-width: 700px) {
+  .reference-home--landing > .reference-hero .reference-hero__image {
+    object-position: 66% 52%;
+  }
+}
+
+/* Curve the homepage hero section without altering or clipping its photograph. */
+.reference-home--landing > .reference-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset-inline: -6%;
+  bottom: -1px;
+  height: clamp(38px, 4.5vw, 68px);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: #fdfbf8;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .reference-home--landing > .reference-hero::after {
+    inset-inline: -12%;
+    height: clamp(26px, 8vw, 38px);
+  }
+}
+
+/* Lift the homepage reservation panel slightly above the curved edge. */
+@media (min-width: 701px) {
+  .reference-home--landing > .reference-hero .reference-hero__booking {
+    bottom: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .reference-home--landing > .reference-hero .reference-hero__booking {
+    margin-top: 14px;
   }
 }
