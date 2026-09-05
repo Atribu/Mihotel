@@ -13,6 +13,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { BookingWidget } from "./components/BookingWidget";
+import { SectionWave } from "./components/SectionWave";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { rooms } from "./lib/site-data";
@@ -109,7 +110,7 @@ export default function Home() {
           </div>
         </section>
 
-        <SectionWave tone="gallery" />
+        <SectionWave from="paper" to="warm" />
 
         <div className="reference-gallery-band">
           <section className="reference-tour reference-gallery-promo" aria-labelledby="gallery-promo-title">
@@ -130,7 +131,7 @@ export default function Home() {
           </section>
         </div>
 
-        <SectionWave tone="gallery-paper" mirrored />
+        <SectionWave from="warm" to="paper" mirrored />
 
         <section className="reference-rooms shell" aria-labelledby="rooms-title">
           <div className="reference-section-heading reference-section-heading--split">
@@ -188,7 +189,7 @@ export default function Home() {
           </div>
         </section>
 
-        <SectionWave tone="soft" />
+        <SectionWave from="paper" to="soft" />
 
         <section className="reference-perks" aria-label="Otel hizmet bilgileri">
           <div className="shell">
@@ -206,7 +207,7 @@ export default function Home() {
           </div>
         </section>
 
-        <SectionWave tone="paper" mirrored />
+        <SectionWave from="soft" to="paper" mirrored />
 
         <section className="reference-about" aria-labelledby="about-title">
           <div className="reference-about__image">
@@ -225,7 +226,7 @@ export default function Home() {
           </div>
         </section>
 
-        <SectionWave tone="soft" />
+        <SectionWave from="paper" to="soft" />
 
         <section className="reference-spaces" id="galeri" aria-labelledby="spaces-title">
           <div className="shell">
@@ -247,7 +248,7 @@ export default function Home() {
           </div>
         </section>
 
-        <SectionWave tone="footer" mirrored />
+        <SectionWave from="soft" to="footer" mirrored />
       </main>
       <SiteFooter />
     </>
@@ -260,20 +261,5 @@ function ReferenceHeading({ eyebrow, title, italic, id }: { eyebrow: string; tit
       <p className="reference-kicker">{eyebrow}</p>
       <h2 id={id}>{title} <em>{italic}</em></h2>
     </div>
-  );
-}
-
-function SectionWave({
-  tone,
-  mirrored = false,
-}: {
-  tone: "gallery" | "gallery-paper" | "soft" | "paper" | "footer";
-  mirrored?: boolean;
-}) {
-  return (
-    <div
-      className={`reference-section-wave reference-section-wave--${tone}${mirrored ? " reference-section-wave--mirrored" : ""}`}
-      aria-hidden="true"
-    />
   );
 }

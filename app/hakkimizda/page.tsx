@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ImagePageHero } from "../components/ImagePageHero";
+import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
@@ -49,6 +50,8 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <SectionWave from="paper" to="warm" />
+
         <section className="values-section section">
           <div className="shell">
             <div className="section-heading section-heading--center">
@@ -71,10 +74,14 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <SectionWave from="warm" to="paper" mirrored />
+
         <section className="about-gallery section shell">
           <img src="/images/hotel-corridor.webp" alt="Mİ Hotel Boutique koridoru" loading="lazy" decoding="async" />
           <img src="/images/hotel-stairs.webp" alt="Mİ Hotel Boutique merdiven alanı" loading="lazy" decoding="async" />
         </section>
+
+        <SectionWave from="paper" to="footer" />
       </main>
       <SiteFooter />
     </>

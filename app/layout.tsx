@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PhoneCall } from "lucide-react";
-import { Bodoni_Moda, Montserrat } from "next/font/google";
+import { Montserrat, Newsreader } from "next/font/google";
 import { headers } from "next/headers";
 import { ConnexeaseChat } from "./components/ConnexeaseChat";
 import { phoneHref, phoneNumber } from "./lib/site-data";
@@ -12,7 +12,7 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const headingFont = Bodoni_Moda({
+const headingFont = Newsreader({
   variable: "--font-playfair",
   subsets: ["latin", "latin-ext"],
   weight: "variable",
@@ -39,8 +39,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: siteDescription,
     icons: {
-      icon: "/brand/mi-hotel-logo.png",
-      shortcut: "/brand/mi-hotel-logo.png",
+      icon: [{ url: "/favicon.png", type: "image/png", sizes: "512x512" }],
+      shortcut: "/favicon.png",
+      apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
     },
     openGraph: {
       type: "website",

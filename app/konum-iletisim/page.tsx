@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ImagePageHero } from "../components/ImagePageHero";
+import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { hotelAddress, mapsEmbedUrl, mapsUrl, phoneHref, phoneNumber } from "../lib/site-data";
@@ -54,17 +55,23 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="contact-pending shell">
-          <div>
-            <p className="reference-kicker">Adres &amp; Yol Tarifi</p>
-            <h2>Mİ Hotel Boutique’a ulaşın.</h2>
-            <address>{hotelAddress}</address>
-            <a className="contact-phone-link" href={phoneHref}>{phoneNumber}</a>
-          </div>
-          <a className="reference-button reference-button--gold" href={mapsUrl} target="_blank" rel="noreferrer">
-            Yol Tarifi Al
-          </a>
-        </section>
+        <SectionWave from="paper" to="warm" />
+
+        <div className="contact-page__closing">
+          <section className="contact-pending shell">
+            <div>
+              <p className="reference-kicker">Adres &amp; Yol Tarifi</p>
+              <h2>Mİ Hotel Boutique’a ulaşın.</h2>
+              <address>{hotelAddress}</address>
+              <a className="contact-phone-link" href={phoneHref}>{phoneNumber}</a>
+            </div>
+            <a className="reference-button reference-button--gold" href={mapsUrl} target="_blank" rel="noreferrer">
+              Yol Tarifi Al
+            </a>
+          </section>
+        </div>
+
+        <SectionWave from="warm" to="footer" mirrored />
       </main>
       <SiteFooter />
     </>

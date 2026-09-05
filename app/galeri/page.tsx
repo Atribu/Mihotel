@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HotelGallery, type HotelGalleryItem } from "../components/HotelGallery";
 import { ImagePageHero } from "../components/ImagePageHero";
+import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { rooms } from "../lib/site-data";
@@ -73,6 +74,8 @@ export default function GalleryPage() {
         <div className="gallery-page__body shell">
           <HotelGallery items={galleryItems} categories={galleryCategories} />
         </div>
+
+        <SectionWave from="paper" to="footer" mirrored />
       </main>
       <SiteFooter />
     </>

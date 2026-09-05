@@ -10,6 +10,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { BookingWidget } from "../components/BookingWidget";
+import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { rooms } from "../lib/site-data";
@@ -48,7 +49,7 @@ export default function RoomsPage() {
     <>
       <SiteHeader overlay activePage="rooms" />
       <main className="reference-home rooms-catalog">
-        <section className="rooms-catalog__hero">
+        <section className="reference-hero rooms-catalog__hero">
           <img
             src="/images/room-family.webp"
             alt="Mİ Hotel Boutique Aile Odası"
@@ -66,14 +67,13 @@ export default function RoomsPage() {
               keşfedin.
             </span>
           </div>
-        </section>
-
-        <section
-          className="rooms-catalog__booking shell"
-          id="rezervasyon"
-          aria-label="Rezervasyon arama"
-        >
-          <BookingWidget />
+          <section
+            className="reference-hero__booking rooms-catalog__booking"
+            id="rezervasyon"
+            aria-label="Rezervasyon arama"
+          >
+            <BookingWidget />
+          </section>
         </section>
 
         <nav className="rooms-catalog__filters shell" aria-label="Oda tipleri">
@@ -135,6 +135,8 @@ export default function RoomsPage() {
           ))}
         </section>
 
+        <SectionWave from="paper" to="warm" />
+
         <section className="rooms-catalog__perks" aria-label="Konaklama ayrıcalıkları">
           <div className="shell">
             {catalogPerks.map(({ icon: Icon, title, text }) => (
@@ -148,6 +150,8 @@ export default function RoomsPage() {
             ))}
           </div>
         </section>
+
+        <SectionWave from="warm" to="footer" mirrored />
       </main>
       <SiteFooter />
     </>

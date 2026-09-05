@@ -18,6 +18,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { BookingWidget } from "../../components/BookingWidget";
 import { RoomGallery } from "../../components/RoomGallery";
+import { SectionWave } from "../../components/SectionWave";
 import { SiteFooter } from "../../components/SiteFooter";
 import { SiteHeader } from "../../components/SiteHeader";
 import { getRoomBySlug, rooms } from "../../lib/site-data";
@@ -142,6 +143,8 @@ export default async function RoomPage({ params }: RoomPageProps) {
           ))}
         </section>
 
+        <SectionWave from="paper" to="warm" />
+
         <section className="room-reference__details">
           <div className="room-reference__details-inner shell">
             <article className="room-reference__about">
@@ -172,6 +175,8 @@ export default async function RoomPage({ params }: RoomPageProps) {
           </div>
         </section>
 
+        <SectionWave from="warm" to="paper" mirrored />
+
         <section className="room-reference__recommendations shell" aria-labelledby="other-rooms-title">
           <div className="room-reference__section-heading">
             <div>
@@ -196,6 +201,8 @@ export default async function RoomPage({ params }: RoomPageProps) {
             ))}
           </div>
         </section>
+
+        <SectionWave from="paper" to="footer" />
       </main>
       <SiteFooter />
     </>
