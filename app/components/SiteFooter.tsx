@@ -92,6 +92,8 @@ export function SiteFooter({ locale = "tr" }: { locale?: Locale }) {
             alt=""
             width="1588"
             height="237"
+            loading="lazy"
+            decoding="async"
           />
         </a>
       </div>

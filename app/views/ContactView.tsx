@@ -2,6 +2,7 @@ import { ImagePageHero } from "../components/ImagePageHero";
 import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { StructuredData } from "../components/StructuredData";
 import { getMessages, interpolate, type Locale } from "../lib/i18n";
 import {
   hotelAddress,
@@ -10,6 +11,7 @@ import {
   phoneHref,
   phoneNumber,
 } from "../lib/site-data";
+import { createContactStructuredData } from "../lib/seo";
 
 export function ContactView({ locale }: { locale: Locale }) {
   const copy = getMessages(locale).contact;
@@ -19,6 +21,7 @@ export function ContactView({ locale }: { locale: Locale }) {
     <>
       <SiteHeader locale={locale} currentPath="/konum-iletisim" overlay activePage="contact" />
       <main className="reference-home reference-inner-page contact-page" lang={locale}>
+        <StructuredData data={createContactStructuredData(locale)} />
         <ImagePageHero
           id="contact-page-title"
           eyebrow={copy.heroEyebrow}
@@ -27,6 +30,8 @@ export function ContactView({ locale }: { locale: Locale }) {
           description={copy.heroText}
           image="/images/mi-hotel-exterior.webp"
           imageAlt={copy.heroAlt}
+          imageWidth={2200}
+          imageHeight={1466}
           variant="contact"
         />
 

@@ -80,7 +80,7 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
               aria-current={index === inlineIndex ? "true" : undefined}
               key={image}
             >
-              <img src={image} alt="" loading="lazy" decoding="async" />
+              <img src={image} alt="" width={2000} height={1333} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
@@ -95,6 +95,8 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
             <img
               src={inlineImage}
               alt={interpolate(a11y.roomOverview, { room: `${roomName} ${inlineIndex + 1} / ${images.length}` })}
+              width={2000}
+              height={1333}
               loading="eager"
               fetchPriority="high"
             />
@@ -161,6 +163,8 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
             <img
               src={activeImage}
               alt={interpolate(a11y.roomOverview, { room: `${roomName} ${activeIndex + 1} / ${images.length}` })}
+              width={2000}
+              height={1333}
               decoding="async"
             />
           </figure>
@@ -179,7 +183,7 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
                 aria-current={index === activeIndex ? "true" : undefined}
                 key={image}
               >
-                <img src={image} alt="" loading="lazy" />
+                <img src={image} alt="" width={2000} height={1333} loading="lazy" decoding="async" />
               </button>
             ))}
           </div>

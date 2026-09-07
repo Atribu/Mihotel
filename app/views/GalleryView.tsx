@@ -23,6 +23,8 @@ export function GalleryView({ locale }: { locale: Locale }) {
       categoryLabel: copy.hotel,
       caption: description,
       alt: `Mİ Hotel Boutique — ${description}`,
+      width: 1800,
+      height: 1200,
     }),
   );
 
@@ -42,6 +44,8 @@ export function GalleryView({ locale }: { locale: Locale }) {
         index: index + 1,
         count: room.gallery.length,
       }),
+      width: 2000,
+      height: 1333,
     })),
   );
 

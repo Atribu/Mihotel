@@ -6,6 +6,8 @@ type ImagePageHeroProps = {
   description: string;
   image: string;
   imageAlt: string;
+  imageWidth?: number;
+  imageHeight?: number;
   variant?: "about" | "contact" | "gallery";
 };
 
@@ -17,6 +19,8 @@ export function ImagePageHero({
   description,
   image,
   imageAlt,
+  imageWidth = 1800,
+  imageHeight = 1200,
   variant,
 }: ImagePageHeroProps) {
   const variantClass = variant ? ` image-page-hero--${variant}` : "";
@@ -27,6 +31,8 @@ export function ImagePageHero({
         className="reference-hero__image"
         src={image}
         alt={imageAlt}
+        width={imageWidth}
+        height={imageHeight}
         loading="eager"
         fetchPriority="high"
       />

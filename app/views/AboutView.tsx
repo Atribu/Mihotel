@@ -26,6 +26,8 @@ export function AboutView({ locale }: { locale: Locale }) {
           <img
             src="/images/hotel-lobby-wide.webp"
             alt={copy.imageAlts[0]}
+            width={1800}
+            height={1200}
             loading="lazy"
             decoding="async"
           />
@@ -64,8 +66,8 @@ export function AboutView({ locale }: { locale: Locale }) {
         <SectionWave from="warm" to="paper" mirrored />
 
         <section className="about-gallery section shell">
-          <img src="/images/hotel-corridor.webp" alt={copy.imageAlts[1]} loading="lazy" decoding="async" />
-          <img src="/images/hotel-stairs.webp" alt={copy.imageAlts[2]} loading="lazy" decoding="async" />
+          <img src="/images/hotel-corridor.webp" alt={copy.imageAlts[1]} width={1800} height={1200} loading="lazy" decoding="async" />
+          <img src="/images/hotel-stairs.webp" alt={copy.imageAlts[2]} width={1800} height={1200} loading="lazy" decoding="async" />
         </section>
 
         <SectionWave from="paper" to="footer" />

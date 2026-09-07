@@ -19,6 +19,7 @@ import { RoomGallery } from "../components/RoomGallery";
 import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { StructuredData } from "../components/StructuredData";
 import {
   getMessages,
   interpolate,
@@ -26,6 +27,7 @@ import {
   type Locale,
 } from "../lib/i18n";
 import { getRoomBySlug, getRooms } from "../lib/site-data";
+import { createRoomStructuredData } from "../lib/seo";
 
 const amenityIcons = [
   Wifi,
@@ -58,6 +60,7 @@ export function RoomDetailView({ locale, slug }: { locale: Locale; slug: string 
     <>
       <SiteHeader locale={locale} currentPath={currentPath} activePage="rooms" />
       <main className="room-reference" lang={locale}>
+        <StructuredData data={createRoomStructuredData(locale, room)} />
         <section className="room-reference__intro shell">
           <nav className="room-reference__breadcrumb" aria-label={messages.a11y.breadcrumb}>
             <Link href={localizedPath(locale, "/")}>{copy.home}</Link>
@@ -152,7 +155,10 @@ export function RoomDetailView({ locale, slug }: { locale: Locale; slug: string 
                   <img
                     src={item.cover}
                     alt={interpolate(messages.a11y.roomOverview, { room: item.name })}
+                    width={1800}
+                    height={1200}
                     loading="lazy"
+                    decoding="async"
                   />
                 </Link>
                 <div>

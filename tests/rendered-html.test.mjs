@@ -39,7 +39,7 @@ test("server-renders the Mİ Hotel Boutique home page", async () => {
 
   const html = await response.text();
   const text = visibleText(html);
-  assert.match(html, /<title>Mİ Hotel Boutique<\/title>/i);
+  assert.match(html, /<title>Mİ Hotel Boutique \| Antalya Merkezinde Butik Otel<\/title>/i);
   assert.match(text, /Konforu hissedin, hikâyenizi yaşayın\./);
   assert.match(text, /Müsaitliği Kontrol Et/);
   assert.match(text, /Ücretsiz Minibar/);
@@ -193,9 +193,71 @@ test("describes the complimentary minibar accurately in every language", async (
   }
 });
 
+test("serves robots and a complete multilingual sitemap", async () => {
+  const robotsResponse = await render("/robots.txt");
+  assert.equal(robotsResponse.status, 200);
+  assert.match(robotsResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
+  const robots = await robotsResponse.text();
+  assert.match(robots, /User-Agent: \*/i);
+  assert.match(robots, /Allow: \//i);
+  assert.match(robots, /Sitemap: https:\/\/mihotelboutique\.com\/sitemap\.xml/i);
+
+  const sitemapResponse = await render("/sitemap.xml");
+  assert.equal(sitemapResponse.status, 200);
+  assert.match(sitemapResponse.headers.get("content-type") ?? "", /^application\/xml\b/i);
+  const sitemap = await sitemapResponse.text();
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 36);
+  assert.match(sitemap, /<loc>https:\/\/mihotelboutique\.com\/odalar\/eco-oda<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/mihotelboutique\.com\/ru\/odalar\/aile-odasi<\/loc>/);
+  for (const language of ["tr", "en", "de", "ru", "x-default"]) {
+    assert.match(sitemap, new RegExp(`hreflang="${language}"`), language);
+  }
+});
+
+test("permanently redirects indexed legacy Wix paths", async () => {
+  const redirects = [
+    ["/i-leti%C5%9Fim?ref=google", "/konum-iletisim?ref=google"],
+    ["/en/i-leti%C5%9Fim", "/en/konum-iletisim"],
+    ["/ke%C5%9Ffet", "/hakkimizda"],
+    ["/en/ke%C5%9Ffet", "/en/hakkimizda"],
+  ];
+
+  for (const [pathname, destination] of redirects) {
+    const response = await render(pathname);
+    assert.equal(response.status, 308, pathname);
+    assert.equal(response.headers.get("location"), destination, pathname);
+  }
+});
+
+test("server-renders hotel, room and breadcrumb structured data", async () => {
+  const homeResponse = await render("/");
+  const homeHtml = await homeResponse.text();
+  assert.match(homeHtml, /type="application\/ld\+json"/);
+  assert.match(homeHtml, /"@type":"Hotel"/);
+  assert.match(homeHtml, /"postalCode":"07100"/);
+  assert.match(homeHtml, /"checkinTime":"14:00"/);
+
+  const roomResponse = await render("/en/odalar/double-oda");
+  const roomHtml = await roomResponse.text();
+  assert.match(roomHtml, /"@type":"HotelRoom"/);
+  assert.match(roomHtml, /"@type":"BreadcrumbList"/);
+  assert.match(roomHtml, /"value":11,"unitCode":"MTK"/);
+  assert.match(roomHtml, /https:\/\/mihotelboutique\.com\/en\/odalar\/double-oda/);
+});
+
+test("renders descriptive alt text for indexable gallery photos", async () => {
+  const response = await render("/galeri");
+  const html = await response.text();
+  assert.match(
+    html,
+    /<img src="\/images\/gallery\/hotel\/genel-01\.webp" alt="Mİ Hotel Boutique — Bitkili duvar ve beyaz merdiven"/,
+  );
+});
+
 test("unsupported locale routes return not found", async () => {
   for (const pathname of ["/fr", "/tr", "/en/odalar/bilinmeyen-oda"]) {
     const response = await render(pathname);
     assert.equal(response.status, 404, pathname);
+    assert.match(await response.text(), /<meta name="robots" content="noindex"\s*\/>/, pathname);
   }
 });

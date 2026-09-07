@@ -16,6 +16,7 @@ import { BookingWidget } from "../components/BookingWidget";
 import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { StructuredData } from "../components/StructuredData";
 import {
   getMessages,
   interpolate,
@@ -23,6 +24,7 @@ import {
   type Locale,
 } from "../lib/i18n";
 import { getRooms } from "../lib/site-data";
+import { createHomeStructuredData } from "../lib/seo";
 
 const serviceVisuals = [
   { image: "/images/hotel-reception.webp", Icon: Clock3 },
@@ -51,6 +53,7 @@ export function HomeView({ locale }: { locale: Locale }) {
     <>
       <SiteHeader locale={locale} currentPath="/" overlay activePage="home" />
       <main className="reference-home reference-home--landing" lang={locale}>
+        <StructuredData data={createHomeStructuredData(locale)} />
         <section className="reference-hero" aria-labelledby="hero-title">
           <img
             className="reference-hero__image"
@@ -91,7 +94,7 @@ export function HomeView({ locale }: { locale: Locale }) {
                 return (
                   <article className="reference-experience" key={image}>
                     <div className="reference-experience__image">
-                      <img src={image} alt="" loading="lazy" decoding="async" />
+                      <img src={image} alt="" width={1800} height={1200} loading="lazy" decoding="async" />
                     </div>
                     <span className="reference-experience__icon" aria-hidden="true">
                       <Icon size={18} strokeWidth={1.45} />
@@ -113,6 +116,8 @@ export function HomeView({ locale }: { locale: Locale }) {
               <img
                 src="/images/hotel-lobby-wide.webp"
                 alt={copy.gallery.imageAlt}
+                width={1800}
+                height={1200}
                 loading="lazy"
                 decoding="async"
               />
@@ -147,6 +152,8 @@ export function HomeView({ locale }: { locale: Locale }) {
                 <img
                   src="/images/room-family.webp"
                   alt={copy.rooms.imageAlt}
+                  width={1800}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                 />
@@ -177,6 +184,8 @@ export function HomeView({ locale }: { locale: Locale }) {
                     <img
                       src={room.cover}
                       alt={interpolate(messages.a11y.roomInterior, { room: room.name })}
+                      width={1800}
+                      height={1200}
                       loading="lazy"
                       decoding="async"
                     />
@@ -216,6 +225,8 @@ export function HomeView({ locale }: { locale: Locale }) {
             <img
               src="/images/hotel-reception.webp"
               alt={copy.about.imageAlt}
+              width={1800}
+              height={1200}
               loading="lazy"
               decoding="async"
             />
@@ -248,6 +259,8 @@ export function HomeView({ locale }: { locale: Locale }) {
                     <img
                       src={image}
                       alt={`${item.title} — ${item.text}`}
+                      width={1800}
+                      height={1200}
                       loading="lazy"
                       decoding="async"
                     />

@@ -87,6 +87,8 @@ export function RoomsView({ locale }: { locale: Locale }) {
                 <img
                   src={room.cover}
                   alt={interpolate(messages.a11y.roomOverview, { room: room.name })}
+                  width={1800}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                 />

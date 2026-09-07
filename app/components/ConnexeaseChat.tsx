@@ -2,7 +2,7 @@
 
 import { MessageCircleMore } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getMessages, normalizeLocale } from "../lib/i18n";
 
 const SCRIPT_ID = "connexease-livechat-embed";
@@ -35,11 +35,17 @@ export function ConnexeaseChat() {
   const messages = getMessages(locale);
   const [isReady, setIsReady] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const loadChatRef = useRef<(() => void) | null>(null);
+  const pendingOpenRef = useRef(false);
 
   useEffect(() => {
     let active = true;
     let eventsBound = false;
     let injectedScript: HTMLScriptElement | null = null;
+    let existingScript: HTMLScriptElement | null = null;
+    let apiCheckInterval: number | null = null;
+    let fallbackTimer: number | null = null;
+    let loadStarted = false;
 
     const setChatState = (open: boolean) => {
       document.documentElement.setAttribute(
@@ -67,6 +73,16 @@ export function ConnexeaseChat() {
       setIsReady(true);
       setIsOpen(open);
       setChatState(open);
+
+      if (!open && pendingOpenRef.current && window.Connexease?.open) {
+        pendingOpenRef.current = false;
+        try {
+          window.Connexease.open();
+        } catch {
+          setIsOpen(false);
+          setChatState(false);
+        }
+      }
     };
 
     const bindChatEvents = () => {
@@ -78,7 +94,10 @@ export function ConnexeaseChat() {
       chat.on("widget:opened", handleOpened);
       chat.on("widget:closed", handleClosed);
       eventsBound = true;
-      window.clearInterval(apiCheckInterval);
+      if (apiCheckInterval !== null) {
+        window.clearInterval(apiCheckInterval);
+        apiCheckInterval = null;
+      }
 
       // The API may already be ready after a hot reload or client navigation.
       if (chat.open && chat.isOpened) handleReady();
@@ -99,25 +118,35 @@ export function ConnexeaseChat() {
       window.__miHotelConnexeaseInitialized = true;
     };
 
-    const apiCheckInterval = window.setInterval(bindChatEvents, 100);
+    const loadChat = () => {
+      if (!active || loadStarted) return;
+      loadStarted = true;
 
-    const existingScript = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+      apiCheckInterval = window.setInterval(bindChatEvents, 100);
+      existingScript = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
 
-    if (existingScript) {
-      initializeChat();
-      existingScript.addEventListener("load", initializeChat, { once: true });
-    } else {
+      if (existingScript) {
+        initializeChat();
+        existingScript.addEventListener("load", initializeChat, { once: true });
+        return;
+      }
+
       injectedScript = document.createElement("script");
       injectedScript.id = SCRIPT_ID;
       injectedScript.src = SCRIPT_URL;
       injectedScript.async = true;
       injectedScript.addEventListener("load", initializeChat, { once: true });
       document.body.appendChild(injectedScript);
-    }
+    };
+
+    loadChatRef.current = loadChat;
+    fallbackTimer = window.setTimeout(loadChat, 2500);
 
     return () => {
       active = false;
-      window.clearInterval(apiCheckInterval);
+      if (apiCheckInterval !== null) window.clearInterval(apiCheckInterval);
+      if (fallbackTimer !== null) window.clearTimeout(fallbackTimer);
+      if (loadChatRef.current === loadChat) loadChatRef.current = null;
       existingScript?.removeEventListener("load", initializeChat);
       injectedScript?.removeEventListener("load", initializeChat);
 
@@ -133,7 +162,11 @@ export function ConnexeaseChat() {
   const openChat = () => {
     const chat = window.Connexease;
 
-    if (!chat?.open) return;
+    if (!isReady || !chat?.open) {
+      pendingOpenRef.current = true;
+      loadChatRef.current?.();
+      return;
+    }
 
     setIsOpen(true);
     document.documentElement.setAttribute(CHAT_STATE_ATTRIBUTE, "open");
@@ -153,7 +186,7 @@ export function ConnexeaseChat() {
       lang={locale}
       aria-label={messages.a11y.chatOpen}
       title={messages.a11y.liveSupport}
-      disabled={!isReady}
+      aria-busy={!isReady}
       hidden={isOpen}
       onClick={openChat}
     >

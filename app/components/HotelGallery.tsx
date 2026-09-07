@@ -11,6 +11,8 @@ export type HotelGalleryItem = {
   categoryLabel: string;
   caption: string;
   alt: string;
+  width: number;
+  height: number;
 };
 
 type GalleryCategory = {
@@ -142,7 +144,7 @@ export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryP
             data-gallery-item="true"
             key={item.id}
           >
-            <img src={item.src} alt="" loading="lazy" decoding="async" />
+            <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" decoding="async" />
             <span className="hotel-gallery__item-copy">
               <small>{item.categoryLabel}</small>
               <strong>{item.caption}</strong>
@@ -190,7 +192,7 @@ export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryP
               touchStartX.current = null;
             }}
           >
-            <img src={activeItem.src} alt={activeItem.alt} decoding="async" />
+            <img src={activeItem.src} alt={activeItem.alt} width={activeItem.width} height={activeItem.height} decoding="async" />
             <figcaption>{activeItem.caption}</figcaption>
           </figure>
 
@@ -208,7 +210,7 @@ export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryP
                 aria-current={index === activeIndex ? "true" : undefined}
                 key={item.id}
               >
-                <img src={item.src} alt="" loading="lazy" />
+                <img src={item.src} alt="" width={item.width} height={item.height} loading="lazy" decoding="async" />
               </button>
             ))}
           </div>
