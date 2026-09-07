@@ -3,7 +3,7 @@
 :root {
   --font-inter: "Montserrat";
   --font-montserrat: var(--font-inter);
-  --font-playfair: "Newsreader";
+  --font-playfair: "Playfair Display";
   --paper: #fbf9f7;
   --paper-deep: #f5f3f1;
   --ink: #1b1c1b;
@@ -4798,6 +4798,127 @@ main {
   }
 }
 
+/* Locale switcher */
+.language-switcher {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.language-switcher > summary {
+  display: inline-flex;
+  min-width: 72px;
+  min-height: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid rgba(75, 65, 58, 0.22);
+  padding-inline: 8px;
+  color: #403832;
+  cursor: pointer;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  list-style: none;
+}
+
+.language-switcher > summary::-webkit-details-marker {
+  display: none;
+}
+
+.language-switcher[open] > summary svg {
+  transform: rotate(180deg);
+}
+
+.language-switcher > nav {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  width: 118px;
+  padding: 7px;
+  border: 1px solid rgba(178, 154, 123, 0.32);
+  border-radius: 8px;
+  background: rgba(253, 251, 248, 0.98);
+  box-shadow: 0 14px 34px rgba(49, 39, 31, 0.14);
+}
+
+.language-switcher:not([open]) > nav {
+  display: none;
+}
+
+.language-switcher > nav a {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: center;
+  min-height: 38px;
+  padding: 0 9px;
+  border-radius: 5px;
+  color: #403832;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.language-switcher__flag {
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.language-switcher__code {
+  color: #a6793d;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.language-switcher > summary .language-switcher__code {
+  color: inherit;
+}
+
+.language-switcher > nav a:hover,
+.language-switcher > nav a:focus-visible,
+.language-switcher > nav a[aria-current="page"] {
+  background: #f1e8dc;
+}
+
+.site-header--overlay:not(.site-header--scrolled) .language-switcher > summary {
+  border-color: rgba(255, 255, 255, 0.34);
+  color: #fff;
+}
+
+.mobile-language-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  padding-block: 5px;
+  background: rgba(178, 154, 123, 0.18);
+}
+
+.mobile-menu nav .mobile-language-links a {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #fbf7f1;
+  text-align: center;
+}
+
+.mobile-menu nav .mobile-language-links a[aria-current="page"] {
+  color: #a6793d;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .language-switcher {
+    display: none;
+  }
+}
+
 /* 15.31 reference — isolated home page composition */
 
 .reference-home {
@@ -9230,6 +9351,18 @@ html {
 }
 
 @media (min-width: 1101px) {
+  /* Keep the gallery feature generous, but prevent its wide image ratio from
+     making the entire band disproportionately tall on large screens. */
+  .reference-home--landing .reference-gallery-band .reference-gallery-promo {
+    height: clamp(460px, 32vw, 580px);
+    min-height: 0;
+  }
+
+  .reference-home--landing .reference-gallery-promo .reference-tour__image {
+    height: 100%;
+    min-height: 0;
+  }
+
   .reference-home--landing .reference-section-wave--gallery-paper + .reference-rooms {
     padding-top: clamp(76px, 6vw, 94px);
   }
@@ -9690,9 +9823,8 @@ html[data-mi-hotel-chat="open"] iframe#web-messenger-container {
 .room-reference .room-reference__heading h1 {
   font-family: var(--font-playfair), Georgia, serif;
   font-size: var(--mi-page-title);
-  font-optical-sizing: auto;
-  font-weight: 350;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   line-height: 1.06;
 }
 
@@ -9723,9 +9855,8 @@ html[data-mi-hotel-chat="open"] iframe#web-messenger-container {
 .gallery-page .hotel-gallery__intro h2 {
   font-family: var(--font-playfair), Georgia, serif;
   font-size: var(--mi-section-title);
-  font-optical-sizing: auto;
-  font-weight: 350;
-  letter-spacing: -0.005em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.12;
 }
 
@@ -10024,5 +10155,224 @@ html[data-mi-hotel-chat="open"] iframe#web-messenger-container {
     height: auto;
     min-height: max(760px, 92vh);
     min-height: max(760px, 92svh);
+  }
+}
+
+/* Mobile navigation: icon trigger and a collapsed room submenu. */
+@media (max-width: 1100px) {
+  .site-header.site-header .mobile-menu {
+    position: relative;
+  }
+
+  .site-header.site-header .mobile-menu > summary {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    list-style: none;
+    border: 1px solid rgba(116, 91, 62, 0.3);
+    border-radius: 50%;
+    padding: 0;
+    background: rgba(253, 251, 248, 0.9);
+    color: #403a37;
+    cursor: pointer;
+    transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+  }
+
+  .site-header.site-header .mobile-menu > summary::-webkit-details-marker,
+  .site-header.site-header .mobile-room-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-header.site-header .mobile-menu > summary::marker,
+  .site-header.site-header .mobile-room-menu > summary::marker {
+    content: "";
+  }
+
+  .site-header.site-header .mobile-menu > summary:hover,
+  .site-header.site-header .mobile-menu > summary:focus-visible {
+    border-color: #b88b47;
+    background: #fff;
+    color: #9b7138;
+  }
+
+  .site-header.site-header--overlay:not(.site-header--scrolled) .mobile-menu > summary {
+    border-color: rgba(255, 255, 255, 0.58);
+    background: rgba(24, 22, 20, 0.2);
+    color: #fff;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  .site-header.site-header .mobile-menu__close-icon {
+    display: none;
+  }
+
+  .site-header.site-header .mobile-menu[open] > summary .mobile-menu__open-icon {
+    display: none;
+  }
+
+  .site-header.site-header .mobile-menu[open] > summary .mobile-menu__close-icon {
+    display: block;
+  }
+
+  .site-header.site-header .mobile-menu:not([open]) > nav {
+    display: none;
+  }
+
+  .site-header.site-header .mobile-menu[open] > nav {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    width: min(360px, calc(100vw - 24px));
+    min-width: 0;
+    max-height: calc(100vh - 112px);
+    max-height: calc(100svh - 112px);
+    display: grid;
+    gap: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid rgba(188, 174, 158, 0.48);
+    border-radius: 14px;
+    padding: 8px;
+    background: rgba(253, 251, 248, 0.98);
+    box-shadow: 0 22px 55px rgba(64, 58, 55, 0.18);
+  }
+
+  .site-header.site-header .mobile-menu > nav > a,
+  .site-header.site-header .mobile-room-menu > summary {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: #403a37;
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.1em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .site-header.site-header .mobile-menu > nav > a:hover,
+  .site-header.site-header .mobile-menu > nav > a:focus-visible,
+  .site-header.site-header .mobile-menu > nav > a[aria-current="page"],
+  .site-header.site-header .mobile-room-menu > summary:hover,
+  .site-header.site-header .mobile-room-menu > summary:focus-visible {
+    background: #f4eee7;
+    color: #9b7138;
+  }
+
+  .site-header.site-header .mobile-room-menu {
+    border-block: 1px solid rgba(188, 174, 158, 0.38);
+  }
+
+  .site-header.site-header .mobile-room-menu > summary {
+    justify-content: space-between;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .site-header.site-header--overlay .mobile-room-menu > summary {
+    color: #403a37;
+  }
+
+  .site-header.site-header .mobile-room-menu > summary svg {
+    flex: 0 0 auto;
+    transition: transform 180ms ease;
+  }
+
+  .site-header.site-header .mobile-room-menu[open] > summary svg {
+    transform: rotate(180deg);
+  }
+
+  .site-header.site-header .mobile-room-menu:not([open]) > .mobile-room-links {
+    display: none;
+  }
+
+  .site-header.site-header .mobile-room-menu[open] > .mobile-room-links {
+    display: grid;
+  }
+
+  .site-header.site-header .mobile-room-links {
+    gap: 2px;
+    border: 0;
+    padding: 4px 6px 8px;
+    background: #f7f2ec;
+  }
+
+  .site-header.site-header .mobile-room-links a {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    border-radius: 7px;
+    padding: 9px 12px 9px 20px;
+    color: #706763;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    line-height: 1.35;
+    text-transform: none;
+  }
+
+  .site-header.site-header .mobile-room-links a:hover,
+  .site-header.site-header .mobile-room-links a:focus-visible,
+  .site-header.site-header .mobile-room-links a[aria-current="page"] {
+    background: #fff;
+    color: #9b7138;
+  }
+
+  .site-header.site-header .mobile-language-links {
+    margin-block: 5px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header.site-header .mobile-room-menu > summary svg {
+    transition: none;
+  }
+}
+
+/* Scale the supplied wave motif to each service image. Alternating its
+   horizontal direction keeps the five cards from feeling repetitive. */
+.reference-home--landing .reference-experience__image {
+  position: relative;
+  isolation: isolate;
+}
+
+.reference-home--landing .reference-experience__image::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  height: clamp(18px, 2.1vw, 30px);
+  background: #fdfbf8;
+  -webkit-mask: url("/images/wave.svg") center / 100% 100% no-repeat;
+  mask: url("/images/wave.svg") center / 100% 100% no-repeat;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.reference-home--landing .reference-experience:nth-child(even) .reference-experience__image::after {
+  transform: scaleX(-1);
+}
+
+.reference-home--landing .reference-experience__icon {
+  margin-top: clamp(-36px, -2.5vw, -27px);
+  margin-inline: clamp(14px, 1.5vw, 24px) auto;
+}
+
+@media (max-width: 700px) {
+  .reference-home--landing .reference-experience__image::after {
+    height: clamp(17px, 5.5vw, 23px);
+  }
+
+  .reference-home--landing .reference-experience__icon {
+    margin-top: -25px;
+    margin-inline: 12px auto;
   }
 }

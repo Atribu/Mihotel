@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { getMessages, interpolate, type Locale } from "../lib/i18n";
 
 const bookingBaseUrl = "https://mi-hotel-boutique.rezervasyonal.com/";
 
@@ -17,7 +18,9 @@ function addDays(date: Date, days: number) {
   return next;
 }
 
-export function BookingWidget() {
+export function BookingWidget({ locale = "tr" }: { locale?: Locale }) {
+  const messages = getMessages(locale);
+  const copy = messages.booking;
   const today = useMemo(() => new Date(), []);
   const [checkin, setCheckin] = useState(() => toDateInputValue(addDays(today, 1)));
   const [checkout, setCheckout] = useState(() => toDateInputValue(addDays(today, 2)));
@@ -49,21 +52,26 @@ export function BookingWidget() {
       Adult: adults,
       child: children,
       ChildAges: childAges.join("+"),
-      language: "tr",
+      language: locale,
     });
 
     window.open(`${bookingBaseUrl}?${params.toString()}`, "_blank", "noopener,noreferrer");
   }
 
   return (
-    <form className="booking-widget" onSubmit={submitBooking}>
+    <form
+      className="booking-widget"
+      onSubmit={submitBooking}
+      aria-label={messages.a11y.bookingSearch}
+      lang={locale}
+    >
       <div className="booking-widget__heading">
-        <span>Doğrudan rezervasyon</span>
-        <strong>Müsaitliğinizi kontrol edin</strong>
+        <span>{copy.eyebrow}</span>
+        <strong>{copy.title}</strong>
       </div>
 
       <label className="booking-field">
-        <span>Giriş</span>
+        <span>{copy.checkIn}</span>
         <input
           type="date"
           value={checkin}
@@ -74,7 +82,7 @@ export function BookingWidget() {
       </label>
 
       <label className="booking-field">
-        <span>Çıkış</span>
+        <span>{copy.checkOut}</span>
         <input
           type="date"
           value={checkout}
@@ -85,7 +93,7 @@ export function BookingWidget() {
       </label>
 
       <label className="booking-field booking-field--compact">
-        <span>Yetişkin</span>
+        <span>{copy.adults}</span>
         <select value={adults} onChange={(event) => setAdults(event.target.value)}>
           {[1, 2, 3, 4, 5, 6].map((value) => (
             <option key={value} value={value}>{value}</option>
@@ -94,7 +102,7 @@ export function BookingWidget() {
       </label>
 
       <label className="booking-field booking-field--compact">
-        <span>Çocuk</span>
+        <span>{copy.children}</span>
         <select value={children} onChange={(event) => updateChildren(event.target.value)}>
           {[0, 1, 2, 3, 4, 5, 6].map((value) => (
             <option key={value} value={value}>{value}</option>
@@ -103,10 +111,10 @@ export function BookingWidget() {
       </label>
 
       {childAges.length > 0 && (
-        <div className="booking-widget__ages" aria-label="Çocuk yaşları">
+        <div className="booking-widget__ages" aria-label={copy.childAges}>
           {childAges.map((age, index) => (
             <label className="booking-field booking-field--compact" key={index}>
-              <span>{index + 1}. çocuk yaşı</span>
+              <span>{interpolate(copy.childAge, { index: index + 1 })}</span>
               <select
                 value={age}
                 onChange={(event) =>
@@ -127,7 +135,7 @@ export function BookingWidget() {
       )}
 
       <button className="button button--gold booking-widget__submit" type="submit">
-        Müsaitliği Ara
+        {copy.submit}
       </button>
     </form>
   );

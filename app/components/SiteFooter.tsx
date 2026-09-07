@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { bookingUrl, hotelAddress, phoneHref, phoneNumber } from "../lib/site-data";
+import { getMessages, localizedPath, type Locale } from "../lib/i18n";
+import { getBookingUrl, hotelAddress, phoneHref, phoneNumber } from "../lib/site-data";
 
 function FooterBrandLogo() {
   return (
@@ -35,40 +36,44 @@ function FooterBrandLogo() {
   );
 }
 
-export function SiteFooter() {
+export function SiteFooter({ locale = "tr" }: { locale?: Locale }) {
+  const messages = getMessages(locale);
+  const bookingUrl = getBookingUrl(locale);
+  const href = (path: string) => localizedPath(locale, path);
+
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" lang={locale}>
       <div className="site-footer__main shell">
         <div className="site-footer__brand">
           <FooterBrandLogo />
-          <p>Sade, işlevsel ve özenli bir şehir konaklaması.</p>
+          <p>{messages.footer.tagline}</p>
           <address className="site-footer__contact">
             <span>{hotelAddress}</span>
             <a href={phoneHref}>{phoneNumber}</a>
           </address>
         </div>
 
-        <nav className="site-footer__nav" aria-label="Alt menü">
-          <strong>Keşfet</strong>
-          <Link href="/">Ana Sayfa</Link>
-          <Link href="/odalar">Odalar</Link>
-          <Link href="/galeri">Galeri</Link>
-          <Link href="/konum-iletisim">Konum &amp; İletişim</Link>
+        <nav className="site-footer__nav" aria-label={messages.a11y.footerMenu}>
+          <strong>{messages.footer.explore}</strong>
+          <Link href={href("/")}>{messages.nav.home}</Link>
+          <Link href={href("/odalar")}>{messages.nav.rooms}</Link>
+          <Link href={href("/galeri")}>{messages.nav.gallery}</Link>
+          <Link href={href("/konum-iletisim")}>{messages.nav.contact}</Link>
         </nav>
 
         <div className="site-footer__services">
-          <strong>Misafir Hizmetleri</strong>
-          <span>7/24 resepsiyon</span>
-          <span>Ücretsiz Wi-Fi</span>
-          <span>Giriş 14:00</span>
-          <span>Çıkış 12:00</span>
+          <strong>{messages.footer.services}</strong>
+          <span>{messages.footer.reception}</span>
+          <span>{messages.footer.wifi}</span>
+          <span>{messages.footer.checkIn}</span>
+          <span>{messages.footer.checkOut}</span>
         </div>
 
         <div className="site-footer__booking">
-          <strong>Konaklamanızı planlayın</strong>
-          <p>Güncel müsaitlik ve fiyatlar için güvenli rezervasyon sayfamızı kullanın.</p>
+          <strong>{messages.footer.plan}</strong>
+          <p>{messages.footer.planText}</p>
           <a className="text-link" href={bookingUrl} target="_blank" rel="noreferrer">
-            Rezervasyona git <span aria-hidden="true">↗</span>
+            {messages.footer.bookingLink} <span aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -80,7 +85,7 @@ export function SiteFooter() {
           href="https://dgtlface.com/"
           target="_blank"
           rel="noreferrer"
-          aria-label="Powered by DGTLFACE — DGTLFACE web sitesini yeni sekmede aç"
+          aria-label={messages.a11y.poweredBy}
         >
           <img
             src="/brand/powered-by-dgtlface-transparent.png"

@@ -1,23 +1,22 @@
 import type { Metadata } from "next";
-import { PhoneCall } from "lucide-react";
-import { Montserrat, Newsreader } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import { headers } from "next/headers";
 import { ConnexeaseChat } from "./components/ConnexeaseChat";
-import { phoneHref, phoneNumber } from "./lib/site-data";
+import { FloatingPhone } from "./components/FloatingPhone";
+import { normalizeLocale } from "./lib/i18n";
 import "./globals.css";
 
 const montserrat = Montserrat({
   variable: "--font-inter",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
   display: "swap",
 });
 
-const headingFont = Newsreader({
+const headingFont = Playfair_Display({
   variable: "--font-playfair",
-  subsets: ["latin", "latin-ext"],
-  weight: "variable",
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  weight: "400",
   style: ["normal", "italic"],
-  axes: ["opsz"],
   display: "swap",
 });
 
@@ -58,23 +57,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = normalizeLocale((await headers()).get("x-mi-hotel-locale"));
+
   return (
-    <html lang="tr">
+    <html lang={locale}>
       <body className={`${montserrat.variable} ${headingFont.variable}`}>
         {children}
-        <a
-          className="floating-phone"
-          href={phoneHref}
-          aria-label={`Mİ Hotel Boutique'u ara: ${phoneNumber}`}
-          title={phoneNumber}
-        >
-          <PhoneCall aria-hidden="true" size={25} strokeWidth={1.8} />
-        </a>
+        <FloatingPhone />
         <ConnexeaseChat />
       </body>
     </html>

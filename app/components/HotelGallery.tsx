@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { getMessages, interpolate, type Locale } from "../lib/i18n";
 
 export type HotelGalleryItem = {
   id: string;
@@ -20,9 +21,13 @@ type GalleryCategory = {
 type HotelGalleryProps = {
   items: readonly HotelGalleryItem[];
   categories: readonly GalleryCategory[];
+  locale?: Locale;
 };
 
-export function HotelGallery({ items, categories }: HotelGalleryProps) {
+export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryProps) {
+  const messages = getMessages(locale);
+  const copy = messages.gallery;
+  const a11y = messages.a11y;
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -90,19 +95,16 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
   const activeItem = activeIndex === null ? null : filteredItems[activeIndex];
 
   return (
-    <section className="hotel-gallery" data-gallery-total={items.length} aria-labelledby="gallery-grid-title">
+    <section className="hotel-gallery" data-gallery-total={items.length} aria-labelledby="gallery-grid-title" lang={locale}>
       <div className="hotel-gallery__intro">
         <div>
-          <p className="reference-kicker">Fotoğraf galerisi</p>
-          <h2 id="gallery-grid-title">Mİ Hotel&apos;in <em>tüm detayları.</em></h2>
+          <p className="reference-kicker">{copy.introEyebrow}</p>
+          <h2 id="gallery-grid-title">{copy.introTitle} <em>{copy.introItalic}</em></h2>
         </div>
-        <p>
-          Otelimizin ortak alanlarını ve tüm oda tiplerini fotoğraflarla keşfedin.
-          Bir görsele dokunarak galeriyi tam ekranda gezebilirsiniz.
-        </p>
+        <p>{copy.introText}</p>
       </div>
 
-      <div className="hotel-gallery__filters" aria-label="Galeri kategorileri">
+      <div className="hotel-gallery__filters" aria-label={a11y.galleryCategories}>
         {categories.map((category) => {
           const count = category.id === "all"
             ? items.length
@@ -127,7 +129,7 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
       </div>
 
       <p className="hotel-gallery__result" aria-live="polite">
-        {filteredItems.length} fotoğraf gösteriliyor
+        {interpolate(copy.result, { count: filteredItems.length })}
       </p>
 
       <div className="hotel-gallery__grid">
@@ -136,7 +138,7 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
             className={`hotel-gallery__item${index === 0 ? " hotel-gallery__item--featured" : ""}`}
             type="button"
             onClick={() => setActiveIndex(index)}
-            aria-label={`${item.alt}; tam ekran galeride aç`}
+            aria-label={interpolate(a11y.openFullscreen, { alt: item.alt })}
             data-gallery-item="true"
             key={item.id}
           >
@@ -157,21 +159,18 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
           className="gallery-lightbox hotel-gallery-lightbox"
           role="dialog"
           aria-modal="true"
-          aria-label={`${activeItem.categoryLabel} fotoğraf galerisi`}
+          aria-label={interpolate(a11y.galleryDialog, { category: activeItem.categoryLabel })}
           ref={dialogRef}
-          onClick={(event) => {
-            if (event.target === event.currentTarget) setActiveIndex(null);
-          }}
         >
           <div className="gallery-lightbox__topbar">
             <span>{activeItem.categoryLabel}</span>
             <span aria-live="polite">{activeIndex + 1} / {filteredItems.length}</span>
-            <button ref={closeButtonRef} type="button" onClick={() => setActiveIndex(null)} aria-label="Galeriyi kapat">
+            <button ref={closeButtonRef} type="button" onClick={() => setActiveIndex(null)} aria-label={a11y.closeGallery}>
               <X aria-hidden="true" size={25} strokeWidth={1.7} />
             </button>
           </div>
 
-          <button className="gallery-lightbox__arrow gallery-lightbox__arrow--previous" type="button" onClick={showPrevious} aria-label="Önceki fotoğraf">
+          <button className="gallery-lightbox__arrow gallery-lightbox__arrow--previous" type="button" onClick={showPrevious} aria-label={a11y.previousPhoto}>
             <ChevronLeft aria-hidden="true" size={32} strokeWidth={1.6} />
           </button>
 
@@ -184,7 +183,10 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
               const endX = event.changedTouches[0]?.clientX;
               if (touchStartX.current === null || endX === undefined) return;
               const distance = endX - touchStartX.current;
-              if (Math.abs(distance) > 50) distance > 0 ? showPrevious() : showNext();
+              if (Math.abs(distance) > 50) {
+                if (distance > 0) showPrevious();
+                else showNext();
+              }
               touchStartX.current = null;
             }}
           >
@@ -192,17 +194,17 @@ export function HotelGallery({ items, categories }: HotelGalleryProps) {
             <figcaption>{activeItem.caption}</figcaption>
           </figure>
 
-          <button className="gallery-lightbox__arrow gallery-lightbox__arrow--next" type="button" onClick={showNext} aria-label="Sonraki fotoğraf">
+          <button className="gallery-lightbox__arrow gallery-lightbox__arrow--next" type="button" onClick={showNext} aria-label={a11y.nextPhoto}>
             <ChevronRight aria-hidden="true" size={32} strokeWidth={1.6} />
           </button>
 
-          <div className="gallery-lightbox__thumbnails" aria-label="Galeri küçük resimleri">
+          <div className="gallery-lightbox__thumbnails" aria-label={a11y.thumbnails}>
             {filteredItems.map((item, index) => (
               <button
                 className={index === activeIndex ? "is-active" : undefined}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                aria-label={`${index + 1}. fotoğrafı göster`}
+                aria-label={interpolate(a11y.showPhoto, { index: index + 1 })}
                 aria-current={index === activeIndex ? "true" : undefined}
                 key={item.id}
               >

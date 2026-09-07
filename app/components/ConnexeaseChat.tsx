@@ -1,7 +1,9 @@
 "use client";
 
 import { MessageCircleMore } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getMessages, normalizeLocale } from "../lib/i18n";
 
 const SCRIPT_ID = "connexease-livechat-embed";
 const SCRIPT_URL = "https://cdn.livechat.connexease.com/embed.js";
@@ -28,6 +30,9 @@ declare global {
 }
 
 export function ConnexeaseChat() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname?.split("/").filter(Boolean)[0]);
+  const messages = getMessages(locale);
   const [isReady, setIsReady] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -145,8 +150,9 @@ export function ConnexeaseChat() {
     <button
       type="button"
       className={`floating-chat${isReady ? " floating-chat--ready" : ""}`}
-      aria-label="Mİ Hotel canlı destek sohbetini aç"
-      title="Canlı destek"
+      lang={locale}
+      aria-label={messages.a11y.chatOpen}
+      title={messages.a11y.liveSupport}
       disabled={!isReady}
       hidden={isOpen}
       onClick={openChat}
