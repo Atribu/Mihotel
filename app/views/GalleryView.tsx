@@ -21,7 +21,7 @@ export function GalleryView({ locale }: { locale: Locale }) {
       src: `/images/gallery/hotel/genel-${String(index + 1).padStart(2, "0")}.webp`,
       category: "hotel",
       categoryLabel: copy.hotel,
-      caption: description,
+      caption: copy.hotelCaptions[index],
       alt: `Mİ Hotel Boutique — ${description}`,
       width: 1800,
       height: 1200,
