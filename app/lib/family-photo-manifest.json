@@ -1,0 +1,227 @@
+[
+  {
+    "number": 1,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-01-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-01-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-01-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-01-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 2,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-02-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-02-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-02-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-02-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 3,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-03-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-03-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-03-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-03-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 4,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-04-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-04-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-04-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-04-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 5,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-05-640.webp",
+        "width": 640,
+        "height": 552
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-05-1280.webp",
+        "width": 1280,
+        "height": 1104
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-05-1920.webp",
+        "width": 1920,
+        "height": 1656
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-05-full.webp",
+      "width": 4822,
+      "height": 4160
+    }
+  },
+  {
+    "number": 6,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-06-640.webp",
+        "width": 640,
+        "height": 396
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-06-1280.webp",
+        "width": 1280,
+        "height": 793
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-06-1920.webp",
+        "width": 1920,
+        "height": 1189
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-06-full.webp",
+      "width": 5602,
+      "height": 3470
+    }
+  },
+  {
+    "number": 7,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-07-640.webp",
+        "width": 640,
+        "height": 386
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-07-1280.webp",
+        "width": 1280,
+        "height": 771
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-07-1920.webp",
+        "width": 1920,
+        "height": 1157
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-07-full.webp",
+      "width": 5886,
+      "height": 3547
+    }
+  },
+  {
+    "number": 8,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-08-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-08-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-08-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-08-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 9,
+    "variants": [
+      {
+        "src": "/images/rooms/family/high-res/220-09-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-09-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/rooms/family/high-res/220-09-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/rooms/family/high-res/220-09-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  }
+]

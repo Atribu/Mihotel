@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
+import sharp from "sharp";
 
 async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -73,16 +75,41 @@ test("server-renders the complete categorized photo gallery", async () => {
   const text = visibleText(html);
   const galleryItems = html.match(/data-gallery-item="true"/g) ?? [];
 
-  assert.equal(galleryItems.length, 44);
-  assert.match(text, /Tümü44/);
-  assert.match(text, /Otel ve Ortak Alanlar13/);
-  assert.match(text, /Eco Oda9/);
+  assert.equal(galleryItems.length, 62);
+  assert.match(text, /Tümü62/);
+  assert.match(text, /Otel ve Ortak Alanlar28/);
+  assert.match(text, /Eco Oda10/);
   assert.match(text, /Double Oda6/);
-  assert.match(text, /Triple Oda6/);
-  assert.match(text, /Aile Odası10/);
-  assert.match(html, /\/images\/gallery\/hotel\/genel-13\.webp/);
-  assert.match(html, /\/images\/rooms\/eco\/105-9\.webp/);
-  assert.match(html, /\/images\/rooms\/family\/107-10\.webp/);
+  assert.match(text, /Triple Oda9/);
+  assert.match(text, /Aile Odası9/);
+  for (let number = 1; number <= 28; number += 1) {
+    const filename = `genel-mekan-${String(number).padStart(2, "0")}-1920.webp`;
+    assert.ok(html.includes(`/images/hotel/high-res/${filename}`), filename);
+  }
+  assert.doesNotMatch(html, /\/images\/gallery\/hotel\/genel-/);
+  assert.doesNotMatch(html, /\/images\/hotel\/genel-mekan-/);
+  assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
+  assert.match(html, /srcSet="[^"]*genel-mekan-26-640\.webp 640w/);
+  for (let number = 1; number <= 10; number += 1) {
+    const filename = `105-${String(number).padStart(2, "0")}-1920.webp`;
+    assert.ok(html.includes(`/images/rooms/eco/high-res/${filename}`), filename);
+  }
+  assert.doesNotMatch(html, /\/images\/rooms\/eco\/105-\d+\.webp/);
+  for (let number = 1; number <= 9; number += 1) {
+    const filename = `202-${String(number).padStart(2, "0")}-1920.webp`;
+    assert.ok(html.includes(`/images/rooms/triple/high-res/${filename}`), filename);
+  }
+  assert.doesNotMatch(html, /\/images\/rooms\/triple\/221-\d+\.webp/);
+  for (let number = 1; number <= 6; number += 1) {
+    const filename = `207-${String(number).padStart(2, "0")}-1920.webp`;
+    assert.ok(html.includes(`/images/rooms/double/high-res/${filename}`), filename);
+  }
+  assert.doesNotMatch(html, /\/images\/rooms\/double\/225-\d+\.webp/);
+  for (let number = 1; number <= 9; number += 1) {
+    const filename = `220-${String(number).padStart(2, "0")}-1920.webp`;
+    assert.ok(html.includes(`/images/rooms/family/high-res/${filename}`), filename);
+  }
+  assert.doesNotMatch(html, /\/images\/rooms\/family\/107-\d+\.webp/);
   assert.match(html, /href="\/galeri"/);
   assert.doesNotMatch(html, /href="\/#galeri"/);
 });
@@ -168,12 +195,259 @@ test("language choices preserve the current room and expose SEO alternates", asy
   }
 });
 
-test("localized gallery keeps all 44 supplied photos", async () => {
+test("localized gallery includes 28 high-resolution hotel photos and 34 room photos", async () => {
   for (const locale of ["en", "de", "ru"]) {
     const response = await render(`/${locale}/galeri`);
     assert.equal(response.status, 200, locale);
     const html = await response.text();
-    assert.equal((html.match(/data-gallery-item="true"/g) ?? []).length, 44, locale);
+    assert.equal((html.match(/data-gallery-item="true"/g) ?? []).length, 62, locale);
+    assert.doesNotMatch(html, /\/images\/gallery\/hotel\/genel-/);
+    assert.doesNotMatch(html, /Mİ Hotel Boutique — undefined/);
+  }
+});
+
+test("Eco photos replace the cover, minibar and room gallery in all four languages", async () => {
+  const prefix = "/images/rooms/eco/high-res/105-";
+  for (const locale of ["", "/en", "/de", "/ru"]) {
+    for (const suffix of ["/", "/odalar", "/odalar/eco-oda", "/odalar/double-oda", "/galeri"]) {
+      const pathname = suffix === "/" ? locale || "/" : `${locale}${suffix}`;
+      const response = await render(pathname);
+      assert.equal(response.status, 200, pathname);
+      const html = await response.text();
+      assert.ok(html.includes(`${prefix}10-1920.webp`), pathname);
+      assert.ok(html.includes(`${prefix}10-640.webp 640w`), pathname);
+      assert.doesNotMatch(html, /\/images\/room-eco(?:-detail)?\.webp/);
+      assert.doesNotMatch(html, /\/images\/rooms\/eco\/105-\d+\.webp/);
+      assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
+      if (suffix === "/") assert.ok(html.includes(`${prefix}09-1920.webp`), pathname);
+      if (suffix === "/odalar/eco-oda") {
+        for (let number = 1; number <= 10; number += 1) {
+          assert.ok(html.includes(`${prefix}${String(number).padStart(2, "0")}-640.webp`), pathname);
+        }
+        assert.match(html, /<meta property="og:image:width" content="1920"/);
+        assert.match(html, /<meta property="og:image:height" content="1280"/);
+        const structuredData = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+          .map((match) => JSON.parse(match[1]));
+        const room = structuredData.flatMap((data) => data["@graph"] ?? [])
+          .find((entity) => entity["@type"] === "HotelRoom");
+        assert.equal(room.image.length, 10);
+        assert.ok(room.image[0].endsWith(`${prefix}10-1920.webp`));
+      }
+    }
+  }
+});
+
+test("all ten Eco photos preserve source dimensions and have correctly sized previews", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../app/lib/eco-photo-manifest.json", import.meta.url), "utf8"));
+  const dimensions = [
+    [3506, 5707], [6240, 4160], [6240, 4160], [5733, 4160], [4160, 6240],
+    [6240, 4160], [6240, 4160], [5830, 3778], [6240, 4160], [6240, 4160],
+  ];
+  assert.equal(manifest.length, 10);
+  assert.equal(new Set(manifest.map((photo) => photo.number)).size, 10);
+  for (const photo of manifest) {
+    assert.deepEqual([photo.full.width, photo.full.height], dimensions[photo.number - 1]);
+    assert.equal(photo.variants.length, 3);
+    for (const [index, variant] of photo.variants.entries()) {
+      assert.equal(Math.max(variant.width, variant.height), [640, 1280, 1920][index]);
+      assert.ok(Math.abs(variant.height - variant.width * photo.full.height / photo.full.width) < 2);
+    }
+    for (const asset of [...photo.variants, photo.full]) {
+      const metadata = await sharp(new URL(`../public${asset.src}`, import.meta.url).pathname).metadata();
+      assert.equal(metadata.format, "webp", asset.src);
+      assert.deepEqual([metadata.width, metadata.height], [asset.width, asset.height], asset.src);
+    }
+  }
+});
+
+test("Triple photos replace the cover and room gallery in all four languages", async () => {
+  const prefix = "/images/rooms/triple/high-res/202-";
+  for (const locale of ["", "/en", "/de", "/ru"]) {
+    for (const suffix of ["/", "/odalar", "/odalar/triple-oda", "/odalar/eco-oda", "/galeri"]) {
+      const pathname = suffix === "/" ? locale || "/" : `${locale}${suffix}`;
+      const response = await render(pathname);
+      assert.equal(response.status, 200, pathname);
+      const html = await response.text();
+      assert.ok(html.includes(`${prefix}04-1920.webp`), pathname);
+      assert.ok(html.includes(`${prefix}04-640.webp 640w`), pathname);
+      assert.doesNotMatch(html, /\/images\/room-triple(?:-detail)?\.webp/);
+      assert.doesNotMatch(html, /\/images\/rooms\/triple\/221-\d+\.webp/);
+      assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
+      if (suffix === "/odalar/triple-oda") {
+        for (let number = 1; number <= 9; number += 1) {
+          assert.ok(html.includes(`${prefix}${String(number).padStart(2, "0")}-640.webp`), pathname);
+        }
+        assert.match(html, /<meta property="og:image:width" content="1920"/);
+        assert.match(html, /<meta property="og:image:height" content="1280"/);
+        const structuredData = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+          .map((match) => JSON.parse(match[1]));
+        const room = structuredData.flatMap((data) => data["@graph"] ?? [])
+          .find((entity) => entity["@type"] === "HotelRoom");
+        assert.equal(room.image.length, 9);
+        assert.ok(room.image[0].endsWith(`${prefix}04-1920.webp`));
+      }
+    }
+  }
+});
+
+test("all nine Triple photos preserve source dimensions and have correctly sized previews", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../app/lib/triple-photo-manifest.json", import.meta.url), "utf8"));
+  const dimensions = [
+    [5175, 3861], [5567, 3481], [6240, 4160], [6240, 4160], [6240, 4160],
+    [6240, 4160], [5056, 3368], [4111, 6240], [6240, 4160],
+  ];
+  assert.equal(manifest.length, 9);
+  assert.equal(new Set(manifest.map((photo) => photo.number)).size, 9);
+  for (const photo of manifest) {
+    assert.deepEqual([photo.full.width, photo.full.height], dimensions[photo.number - 1]);
+    assert.equal(photo.variants.length, 3);
+    for (const [index, variant] of photo.variants.entries()) {
+      assert.equal(Math.max(variant.width, variant.height), [640, 1280, 1920][index]);
+      assert.ok(Math.abs(variant.height - variant.width * photo.full.height / photo.full.width) < 2);
+    }
+    for (const asset of [...photo.variants, photo.full]) {
+      const metadata = await sharp(new URL(`../public${asset.src}`, import.meta.url).pathname).metadata();
+      assert.equal(metadata.format, "webp", asset.src);
+      assert.deepEqual([metadata.width, metadata.height], [asset.width, asset.height], asset.src);
+    }
+  }
+});
+
+test("Double photos replace the cover and room gallery in all four languages", async () => {
+  const prefix = "/images/rooms/double/high-res/207-";
+  for (const locale of ["", "/en", "/de", "/ru"]) {
+    for (const suffix of ["/", "/odalar", "/odalar/double-oda", "/odalar/triple-oda", "/galeri"]) {
+      const pathname = suffix === "/" ? locale || "/" : `${locale}${suffix}`;
+      const response = await render(pathname);
+      assert.equal(response.status, 200, pathname);
+      const html = await response.text();
+      assert.ok(html.includes(`${prefix}01-1920.webp`), pathname);
+      assert.ok(html.includes(`${prefix}01-640.webp 640w`), pathname);
+      assert.doesNotMatch(html, /\/images\/room-double(?:-detail)?\.webp/);
+      assert.doesNotMatch(html, /\/images\/rooms\/double\/225-\d+\.webp/);
+      assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
+      if (suffix === "/odalar/double-oda") {
+        for (let number = 1; number <= 6; number += 1) {
+          assert.ok(html.includes(`${prefix}${String(number).padStart(2, "0")}-640.webp`), pathname);
+        }
+        assert.match(html, /<meta property="og:image:width" content="1920"/);
+        assert.match(html, /<meta property="og:image:height" content="1506"/);
+        const structuredData = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+          .map((match) => JSON.parse(match[1]));
+        const room = structuredData.flatMap((data) => data["@graph"] ?? [])
+          .find((entity) => entity["@type"] === "HotelRoom");
+        assert.equal(room.image.length, 6);
+        assert.ok(room.image[0].endsWith(`${prefix}01-1920.webp`));
+      }
+    }
+  }
+});
+
+test("all six Double photos preserve source dimensions and have correctly sized previews", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../app/lib/double-photo-manifest.json", import.meta.url), "utf8"));
+  const dimensions = [
+    [4818, 3779], [6240, 4160], [6240, 4160], [5409, 4160], [4160, 6240], [4160, 6240],
+  ];
+  assert.equal(manifest.length, 6);
+  assert.equal(new Set(manifest.map((photo) => photo.number)).size, 6);
+  for (const photo of manifest) {
+    assert.deepEqual([photo.full.width, photo.full.height], dimensions[photo.number - 1]);
+    assert.equal(photo.variants.length, 3);
+    for (const [index, variant] of photo.variants.entries()) {
+      assert.equal(Math.max(variant.width, variant.height), [640, 1280, 1920][index]);
+      assert.ok(Math.abs(variant.height - variant.width * photo.full.height / photo.full.width) < 2);
+    }
+    for (const asset of [...photo.variants, photo.full]) {
+      const metadata = await sharp(new URL(`../public${asset.src}`, import.meta.url).pathname).metadata();
+      assert.equal(metadata.format, "webp", asset.src);
+      assert.deepEqual([metadata.width, metadata.height], [asset.width, asset.height], asset.src);
+    }
+  }
+});
+
+test("Family photos replace the cover, featured images and room gallery in all four languages", async () => {
+  const prefix = "/images/rooms/family/high-res/220-";
+  const order = [7, 1, 3, 2, 9, 6, 8, 4, 5];
+  for (const locale of ["", "/en", "/de", "/ru"]) {
+    for (const suffix of ["/", "/odalar", "/odalar/aile-odasi", "/odalar/eco-oda", "/galeri"]) {
+      const pathname = suffix === "/" ? locale || "/" : `${locale}${suffix}`;
+      const response = await render(pathname);
+      assert.equal(response.status, 200, pathname);
+      const html = await response.text();
+      assert.ok(html.includes(`${prefix}07-1920.webp`), pathname);
+      assert.ok(html.includes(`${prefix}07-640.webp 640w`), pathname);
+      assert.doesNotMatch(html, /\/images\/room-family(?:-(?:detail|bath))?\.webp/);
+      assert.doesNotMatch(html, /\/images\/rooms\/family\/107-\d+\.webp/);
+      assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
+      if (suffix === "/") {
+        assert.match(html, /class="reference-featured-room__image"[^>]*>\s*<img[^>]*src="\/images\/rooms\/family\/high-res\/220-07-1920\.webp"/);
+      }
+      if (suffix === "/odalar") {
+        assert.match(html, /class="reference-hero rooms-catalog__hero">\s*<img[^>]*src="\/images\/rooms\/family\/high-res\/220-07-1920\.webp"/);
+      }
+      if (suffix === "/odalar" || suffix === "/odalar/aile-odasi") {
+        assert.match(html, /<meta property="og:image" content="[^"]*\/images\/rooms\/family\/high-res\/220-07-1920\.webp"/);
+        assert.match(html, /<meta property="og:image:width" content="1920"/);
+        assert.match(html, /<meta property="og:image:height" content="1157"/);
+      }
+      if (suffix === "/odalar/aile-odasi") {
+        for (let number = 1; number <= 9; number += 1) {
+          assert.ok(html.includes(`${prefix}${String(number).padStart(2, "0")}-640.webp`), pathname);
+        }
+        const structuredData = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+          .map((match) => JSON.parse(match[1]));
+        const room = structuredData.flatMap((data) => data["@graph"] ?? [])
+          .find((entity) => entity["@type"] === "HotelRoom");
+        assert.equal(room.image.length, 9);
+        assert.deepEqual(room.image.map((src) => new URL(src).pathname),
+          order.map((number) => `${prefix}${String(number).padStart(2, "0")}-1920.webp`));
+      }
+    }
+  }
+});
+
+test("all nine Family photos preserve source dimensions and have correctly sized previews", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../app/lib/family-photo-manifest.json", import.meta.url), "utf8"));
+  const dimensions = [
+    [6240, 4160], [6240, 4160], [6240, 4160], [6240, 4160], [4822, 4160],
+    [5602, 3470], [5886, 3547], [6240, 4160], [6240, 4160],
+  ];
+  assert.equal(manifest.length, 9);
+  assert.equal(new Set(manifest.map((photo) => photo.number)).size, 9);
+  for (const photo of manifest) {
+    assert.deepEqual([photo.full.width, photo.full.height], dimensions[photo.number - 1]);
+    assert.equal(photo.variants.length, 3);
+    for (const [index, variant] of photo.variants.entries()) {
+      assert.equal(Math.max(variant.width, variant.height), [640, 1280, 1920][index]);
+      assert.ok(Math.abs(variant.height - variant.width * photo.full.height / photo.full.width) < 2);
+    }
+    for (const asset of [...photo.variants, photo.full]) {
+      const metadata = await sharp(new URL(`../public${asset.src}`, import.meta.url).pathname).metadata();
+      assert.equal(metadata.format, "webp", asset.src);
+      assert.deepEqual([metadata.width, metadata.height], [asset.width, asset.height], asset.src);
+    }
+  }
+});
+
+test("hotel photo assets preserve full resolution and supply smaller responsive previews", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../app/lib/hotel-photo-manifest.json", import.meta.url), "utf8"));
+  assert.equal(manifest.length, 28);
+  assert.equal(new Set(manifest.map((photo) => photo.number)).size, 28);
+  assert.deepEqual([manifest[25].full.width, manifest[25].full.height], [5056, 3368]);
+  assert.deepEqual([manifest[0].full.width, manifest[0].full.height], [4160, 6240]);
+
+  for (const photo of manifest) {
+    assert.ok(Math.min(photo.full.width, photo.full.height) >= 1760);
+    assert.equal(photo.variants.length, 3);
+    for (const [index, variant] of photo.variants.entries()) {
+      assert.equal(Math.max(variant.width, variant.height), [640, 1280, 1920][index]);
+      assert.ok(Math.abs(variant.height - variant.width * photo.full.height / photo.full.width) < 2);
+    }
+    for (const asset of [...photo.variants, photo.full]) {
+      const metadata = await sharp(new URL(`../public${asset.src}`, import.meta.url).pathname).metadata();
+      assert.equal(metadata.format, "webp", asset.src);
+      assert.deepEqual([metadata.width, metadata.height], [asset.width, asset.height], asset.src);
+    }
   }
 });
 
@@ -250,7 +524,7 @@ test("renders descriptive alt text for indexable gallery photos", async () => {
   const html = await response.text();
   assert.match(
     html,
-    /<img src="\/images\/gallery\/hotel\/genel-01\.webp" alt="Mİ Hotel Boutique — Bitkili duvar ve beyaz merdiven"/,
+    /<img src="\/images\/hotel\/high-res\/genel-mekan-26-1920\.webp"[^>]*alt="Mİ Hotel Boutique — Otel cephesinin alacakaranlık görünümü"/,
   );
 });
 

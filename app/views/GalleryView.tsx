@@ -9,29 +9,28 @@ import {
   type Locale,
 } from "../lib/i18n";
 import { getRooms } from "../lib/site-data";
+import { hotelGalleryImages, hotelImages } from "../lib/hotel-images";
+import { getRoomGalleryImage } from "../lib/room-images";
 
 export function GalleryView({ locale }: { locale: Locale }) {
   const messages = getMessages(locale);
   const copy = messages.gallery;
   const rooms = getRooms(locale);
 
-  const hotelImages: readonly HotelGalleryItem[] = copy.hotelDescriptions.map(
-    (description, index) => ({
-      id: `hotel-${index + 1}`,
-      src: `/images/gallery/hotel/genel-${String(index + 1).padStart(2, "0")}.webp`,
+  const hotelItems: readonly HotelGalleryItem[] = hotelGalleryImages.map(
+    (image, index) => ({
+      ...image,
       category: "hotel",
       categoryLabel: copy.hotel,
-      caption: description,
-      alt: `Mİ Hotel Boutique — ${description}`,
-      width: 1800,
-      height: 1200,
+      caption: copy.hotelDescriptions[index],
+      alt: `Mİ Hotel Boutique — ${copy.hotelDescriptions[index]}`,
     }),
   );
 
   const roomImages: readonly HotelGalleryItem[] = rooms.flatMap((room) =>
     room.gallery.map((src, index) => ({
       id: `${room.slug}-${index + 1}`,
-      src,
+      ...getRoomGalleryImage(src),
       category: room.slug,
       categoryLabel: room.name,
       caption: interpolate(copy.roomCaption, {
@@ -44,12 +43,10 @@ export function GalleryView({ locale }: { locale: Locale }) {
         index: index + 1,
         count: room.gallery.length,
       }),
-      width: 2000,
-      height: 1333,
     })),
   );
 
-  const galleryItems = [...hotelImages, ...roomImages];
+  const galleryItems = [...hotelItems, ...roomImages];
   const galleryCategories = [
     { id: "all", label: copy.all },
     { id: "hotel", label: copy.hotel },
@@ -66,8 +63,11 @@ export function GalleryView({ locale }: { locale: Locale }) {
           title={copy.heroTitle}
           italic={copy.heroItalic}
           description={copy.heroText}
-          image="/images/gallery/hotel/genel-08.webp"
+          image={hotelImages.lobby.src}
+          imageSrcSet={hotelImages.lobby.srcSet}
           imageAlt={copy.heroAlt}
+          imageWidth={hotelImages.lobby.width}
+          imageHeight={hotelImages.lobby.height}
           variant="gallery"
         />
 

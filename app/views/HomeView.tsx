@@ -13,6 +13,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { BookingWidget } from "../components/BookingWidget";
+import { HeroVideo } from "../components/HeroVideo";
 import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -25,21 +26,23 @@ import {
 } from "../lib/i18n";
 import { getRooms } from "../lib/site-data";
 import { createHomeStructuredData } from "../lib/seo";
+import { hotelImages } from "../lib/hotel-images";
+import { ecoMinibarImage, familyCoverImage, getRoomCoverImage } from "../lib/room-images";
 
 const serviceVisuals = [
-  { image: "/images/hotel-reception.webp", Icon: Clock3 },
-  { image: "/images/hotel-lounge.webp", Icon: Wifi },
-  { image: "/images/room-eco-detail.webp", Icon: GlassWater },
-  { image: "/images/hotel-seating.webp", Icon: UtensilsCrossed },
-  { image: "/images/hotel-corridor.webp", Icon: WashingMachine },
+  { image: hotelImages.reception, Icon: Clock3 },
+  { image: hotelImages.seating, Icon: Wifi },
+  { image: ecoMinibarImage, Icon: GlassWater },
+  { image: hotelImages.courtyardSeating, Icon: UtensilsCrossed },
+  { image: hotelImages.corridor, Icon: WashingMachine },
 ] as const;
 
 const hotelSpaceImages = [
-  "/images/hotel-lobby-wide.webp",
-  "/images/hotel-lounge.webp",
-  "/images/hotel-seating.webp",
-  "/images/hotel-stairs.webp",
-  "/images/mi-hotel-exterior.webp",
+  hotelImages.reception,
+  hotelImages.lobby,
+  hotelImages.seating,
+  hotelImages.courtyard,
+  hotelImages.exterior,
 ] as const;
 
 const perkIcons = [BellRing, Wifi, Coffee, WashingMachine] as const;
@@ -55,17 +58,7 @@ export function HomeView({ locale }: { locale: Locale }) {
       <main className="reference-home reference-home--landing" lang={locale}>
         <StructuredData data={createHomeStructuredData(locale)} />
         <section className="reference-hero" aria-labelledby="hero-title">
-          <img
-            className="reference-hero__image"
-            src="/images/hero-lobby-relief-clean.webp"
-            srcSet="/images/hero-lobby-relief-clean-720.webp 720w, /images/hero-lobby-relief-clean-1280.webp 1280w, /images/hero-lobby-relief-clean.webp 1800w"
-            sizes="100vw"
-            alt={copy.hero.imageAlt}
-            width={1800}
-            height={1200}
-            loading="eager"
-            fetchPriority="high"
-          />
+          <HeroVideo locale={locale} />
           <div className="reference-hero__veil" />
           <div className="reference-hero__content shell">
             <p className="reference-kicker reference-kicker--light">{copy.hero.eyebrow}</p>
@@ -92,9 +85,9 @@ export function HomeView({ locale }: { locale: Locale }) {
               {serviceVisuals.map(({ image, Icon }, index) => {
                 const item = copy.services.items[index];
                 return (
-                  <article className="reference-experience" key={image}>
+                  <article className="reference-experience" key={image.src}>
                     <div className="reference-experience__image">
-                      <img src={image} alt="" width={1800} height={1200} loading="lazy" decoding="async" />
+                      <img {...image} sizes="(max-width: 600px) 80vw, (max-width: 1000px) 40vw, 20vw" alt="" loading="lazy" decoding="async" />
                     </div>
                     <span className="reference-experience__icon" aria-hidden="true">
                       <Icon size={18} strokeWidth={1.45} />
@@ -114,10 +107,9 @@ export function HomeView({ locale }: { locale: Locale }) {
           <section className="reference-tour reference-gallery-promo" aria-labelledby="gallery-promo-title">
             <div className="reference-tour__image">
               <img
-                src="/images/hotel-lobby-wide.webp"
+                {...hotelImages.lobby}
+                sizes="(max-width: 700px) 100vw, 70vw"
                 alt={copy.gallery.imageAlt}
-                width={1800}
-                height={1200}
                 loading="lazy"
                 decoding="async"
               />
@@ -150,10 +142,9 @@ export function HomeView({ locale }: { locale: Locale }) {
             <article className="reference-featured-room">
               <Link className="reference-featured-room__image" href={localizedPath(locale, "/odalar")}>
                 <img
-                  src="/images/room-family.webp"
+                  {...familyCoverImage}
+                  sizes="(max-width: 700px) 92vw, 52vw"
                   alt={copy.rooms.imageAlt}
-                  width={1800}
-                  height={1200}
                   loading="lazy"
                   decoding="async"
                 />
@@ -182,10 +173,9 @@ export function HomeView({ locale }: { locale: Locale }) {
                     className="reference-compact-room__image"
                   >
                     <img
-                      src={room.cover}
+                      {...getRoomCoverImage(room.cover)}
+                      sizes="(max-width: 700px) 92vw, 25vw"
                       alt={interpolate(messages.a11y.roomInterior, { room: room.name })}
-                      width={1800}
-                      height={1200}
                       loading="lazy"
                       decoding="async"
                     />
@@ -223,10 +213,9 @@ export function HomeView({ locale }: { locale: Locale }) {
         <section className="reference-about" aria-labelledby="about-title">
           <div className="reference-about__image">
             <img
-              src="/images/hotel-reception.webp"
+              {...hotelImages.reception}
+              sizes="(max-width: 700px) 100vw, 60vw"
               alt={copy.about.imageAlt}
-              width={1800}
-              height={1200}
               loading="lazy"
               decoding="async"
             />
@@ -255,17 +244,15 @@ export function HomeView({ locale }: { locale: Locale }) {
               {hotelSpaceImages.map((image, index) => {
                 const item = copy.spaces.items[index];
                 return (
-                  <article key={image}>
+                  <article key={image.src}>
                     <img
-                      src={image}
+                      {...image}
+                      sizes="(max-width: 600px) 80vw, (max-width: 1000px) 40vw, 20vw"
                       alt={`${item.title} — ${item.text}`}
-                      width={1800}
-                      height={1200}
                       loading="lazy"
                       decoding="async"
                     />
                     <h3>{item.title}</h3>
-                    <p>{item.text}</p>
                   </article>
                 );
               })}

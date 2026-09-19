@@ -12,6 +12,7 @@ import {
   phoneNumber,
 } from "../lib/site-data";
 import { createContactStructuredData } from "../lib/seo";
+import { hotelImages } from "../lib/hotel-images";
 
 export function ContactView({ locale }: { locale: Locale }) {
   const copy = getMessages(locale).contact;
@@ -28,10 +29,11 @@ export function ContactView({ locale }: { locale: Locale }) {
           title={copy.heroTitle}
           italic={copy.heroItalic}
           description={copy.heroText}
-          image="/images/mi-hotel-exterior.webp"
+          image={hotelImages.exterior.src}
+          imageSrcSet={hotelImages.exterior.srcSet}
           imageAlt={copy.heroAlt}
-          imageWidth={2200}
-          imageHeight={1466}
+          imageWidth={hotelImages.exterior.width}
+          imageHeight={hotelImages.exterior.height}
           variant="contact"
         />
 

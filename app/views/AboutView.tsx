@@ -3,6 +3,7 @@ import { SectionWave } from "../components/SectionWave";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { getMessages, type Locale } from "../lib/i18n";
+import { hotelImages } from "../lib/hotel-images";
 
 export function AboutView({ locale }: { locale: Locale }) {
   const copy = getMessages(locale).about;
@@ -17,17 +18,19 @@ export function AboutView({ locale }: { locale: Locale }) {
           title={copy.heroTitle}
           italic={copy.heroItalic}
           description={copy.heroText}
-          image="/images/hotel-reception.webp"
+          image={hotelImages.reception.src}
+          imageSrcSet={hotelImages.reception.srcSet}
           imageAlt={copy.imageAlts[0]}
+          imageWidth={hotelImages.reception.width}
+          imageHeight={hotelImages.reception.height}
           variant="about"
         />
 
         <section className="about-feature shell">
           <img
-            src="/images/hotel-lobby-wide.webp"
+            {...hotelImages.lobbyWide}
+            sizes="100vw"
             alt={copy.imageAlts[0]}
-            width={1800}
-            height={1200}
             loading="lazy"
             decoding="async"
           />
@@ -66,8 +69,8 @@ export function AboutView({ locale }: { locale: Locale }) {
         <SectionWave from="warm" to="paper" mirrored />
 
         <section className="about-gallery section shell">
-          <img src="/images/hotel-corridor.webp" alt={copy.imageAlts[1]} width={1800} height={1200} loading="lazy" decoding="async" />
-          <img src="/images/hotel-stairs.webp" alt={copy.imageAlts[2]} width={1800} height={1200} loading="lazy" decoding="async" />
+          <img {...hotelImages.corridor} sizes="(max-width: 700px) 100vw, 50vw" alt={copy.imageAlts[1]} loading="lazy" decoding="async" />
+          <img {...hotelImages.stairs} sizes="(max-width: 700px) 100vw, 50vw" alt={copy.imageAlts[2]} loading="lazy" decoding="async" />
         </section>
 
         <SectionWave from="paper" to="footer" />

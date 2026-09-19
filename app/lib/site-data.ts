@@ -1,4 +1,5 @@
 import type { Locale, RoomSlug } from "./i18n";
+import { doubleRoomPhotos, ecoRoomPhotos, familyRoomPhotos, tripleRoomPhotos } from "./room-images";
 
 export type { RoomSlug } from "./i18n";
 
@@ -52,61 +53,26 @@ const roomBases: readonly RoomBase[] = [
   {
     slug: "eco-oda",
     size: "9 m²",
-    cover: "/images/room-eco.webp",
-    gallery: [
-      "/images/rooms/eco/105-9.webp",
-      "/images/rooms/eco/105-1.webp",
-      "/images/rooms/eco/105-2.webp",
-      "/images/rooms/eco/105-3.webp",
-      "/images/rooms/eco/105-4.webp",
-      "/images/rooms/eco/105-5.webp",
-      "/images/rooms/eco/105-6.webp",
-      "/images/rooms/eco/105-7.webp",
-      "/images/rooms/eco/105-8.webp",
-    ],
+    cover: ecoRoomPhotos[0].src,
+    gallery: ecoRoomPhotos.map((photo) => photo.src),
   },
   {
     slug: "double-oda",
     size: "11 m²",
-    cover: "/images/room-double.webp",
-    gallery: [
-      "/images/rooms/double/225-6.webp",
-      "/images/rooms/double/225-1.webp",
-      "/images/rooms/double/225-2.webp",
-      "/images/rooms/double/225-3.webp",
-      "/images/rooms/double/225-4.webp",
-      "/images/rooms/double/225-5.webp",
-    ],
+    cover: doubleRoomPhotos[0].src,
+    gallery: doubleRoomPhotos.map((photo) => photo.src),
   },
   {
     slug: "triple-oda",
     size: "14 m²",
-    cover: "/images/room-triple.webp",
-    gallery: [
-      "/images/rooms/triple/221-4.webp",
-      "/images/rooms/triple/221-1.webp",
-      "/images/rooms/triple/221-2.webp",
-      "/images/rooms/triple/221-3.webp",
-      "/images/rooms/triple/221-5.webp",
-      "/images/rooms/triple/221-6.webp",
-    ],
+    cover: tripleRoomPhotos[0].src,
+    gallery: tripleRoomPhotos.map((photo) => photo.src),
   },
   {
     slug: "aile-odasi",
     size: "30 m²",
-    cover: "/images/room-family.webp",
-    gallery: [
-      "/images/rooms/family/107-10.webp",
-      "/images/rooms/family/107-1.webp",
-      "/images/rooms/family/107-2.webp",
-      "/images/rooms/family/107-3.webp",
-      "/images/rooms/family/107-4.webp",
-      "/images/rooms/family/107-5.webp",
-      "/images/rooms/family/107-6.webp",
-      "/images/rooms/family/107-7.webp",
-      "/images/rooms/family/107-8.webp",
-      "/images/rooms/family/107-9.webp",
-    ],
+    cover: familyRoomPhotos[0].src,
+    gallery: familyRoomPhotos.map((photo) => photo.src),
   },
 ];
 

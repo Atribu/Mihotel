@@ -28,6 +28,7 @@ import {
 } from "../lib/i18n";
 import { getRoomBySlug, getRooms } from "../lib/site-data";
 import { createRoomStructuredData } from "../lib/seo";
+import { getRoomCoverImage } from "../lib/room-images";
 
 const amenityIcons = [
   Wifi,
@@ -153,10 +154,9 @@ export function RoomDetailView({ locale, slug }: { locale: Locale; slug: string 
               <article key={item.slug}>
                 <Link href={localizedPath(locale, `/odalar/${item.slug}`)}>
                   <img
-                    src={item.cover}
+                    {...getRoomCoverImage(item.cover)}
+                    sizes="(max-width: 700px) 92vw, 31vw"
                     alt={interpolate(messages.a11y.roomOverview, { room: item.name })}
-                    width={1800}
-                    height={1200}
                     loading="lazy"
                     decoding="async"
                   />

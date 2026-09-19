@@ -19,6 +19,7 @@ import {
   type Locale,
 } from "../lib/i18n";
 import { getRooms } from "../lib/site-data";
+import { familyCoverImage, getRoomCoverImage } from "../lib/room-images";
 
 const perkIcons = [Clock3, Wifi, Coffee, Headphones] as const;
 
@@ -33,10 +34,9 @@ export function RoomsView({ locale }: { locale: Locale }) {
       <main className="reference-home rooms-catalog" lang={locale}>
         <section className="reference-hero rooms-catalog__hero">
           <img
-            src="/images/room-family.webp"
+            {...familyCoverImage}
+            sizes="100vw"
             alt={copy.heroAlt}
-            width={1800}
-            height={1200}
             loading="eager"
             fetchPriority="high"
           />
@@ -85,10 +85,9 @@ export function RoomsView({ locale }: { locale: Locale }) {
                 aria-label={interpolate(messages.a11y.roomDetails, { room: room.name })}
               >
                 <img
-                  src={room.cover}
+                  {...getRoomCoverImage(room.cover)}
+                  sizes="(max-width: 700px) 92vw, 46vw"
                   alt={interpolate(messages.a11y.roomOverview, { room: room.name })}
-                  width={1800}
-                  height={1200}
                   loading="lazy"
                   decoding="async"
                 />

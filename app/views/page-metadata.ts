@@ -8,6 +8,8 @@ import {
   type Locale,
 } from "../lib/i18n";
 import type { Room } from "../lib/site-data";
+import { hotelImages } from "../lib/hotel-images";
+import { familyCoverImage, getRoomCoverImage } from "../lib/room-images";
 
 const brandName = "Mİ Hotel Boutique";
 
@@ -33,12 +35,12 @@ const pagePaths: Record<StaticPage, string> = {
   contact: "/konum-iletisim",
 };
 
-const pageSocialImages: Record<StaticPage, { url: string; width: number; height: number; type: "image/png" | "image/webp" }> = {
+const pageSocialImages: Record<StaticPage, { url: string; width: number; height: number; type: "image/png" | "image/webp" | "image/jpeg" }> = {
   home: { url: "/og.png", width: 1200, height: 630, type: "image/png" },
-  rooms: { url: "/images/room-family.webp", width: 1800, height: 1200, type: "image/webp" },
-  gallery: { url: "/images/gallery/hotel/genel-08.webp", width: 1800, height: 1200, type: "image/webp" },
-  about: { url: "/images/hotel-reception.webp", width: 1800, height: 1200, type: "image/webp" },
-  contact: { url: "/images/mi-hotel-exterior.webp", width: 2200, height: 1466, type: "image/webp" },
+  rooms: { url: familyCoverImage.src, width: familyCoverImage.width, height: familyCoverImage.height, type: "image/webp" },
+  gallery: { url: hotelImages.lobby.src, width: hotelImages.lobby.width, height: hotelImages.lobby.height, type: "image/webp" },
+  about: { url: hotelImages.reception.src, width: hotelImages.reception.width, height: hotelImages.reception.height, type: "image/webp" },
+  contact: { url: hotelImages.exterior.src, width: hotelImages.exterior.width, height: hotelImages.exterior.height, type: "image/webp" },
 };
 
 const seoCopy: Record<Locale, Record<StaticPage, { title: string; description: string }>> = {
@@ -199,6 +201,7 @@ export function createRoomMetadata(locale: Locale, room: Room): Metadata {
   const title = `${room.name} (${localizedSize}) — ${roomLocation[locale]}`;
   const description = `${room.description} ${roomDescriptionSuffix[locale]}`;
   const socialTitle = `${title} | ${brandName}`;
+  const coverImage = getRoomCoverImage(room.cover);
 
   return {
     title,
@@ -218,8 +221,8 @@ export function createRoomMetadata(locale: Locale, room: Room): Metadata {
       alternateLocale: socialLocales(locale),
       images: [{
         url: room.cover,
-        width: 1800,
-        height: 1200,
+        width: coverImage.width,
+        height: coverImage.height,
         type: "image/webp",
         alt: copy.a11y.roomInterior.replace("{room}", room.name),
       }],

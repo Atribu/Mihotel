@@ -7,6 +7,11 @@ import { getMessages, interpolate, type Locale } from "../lib/i18n";
 export type HotelGalleryItem = {
   id: string;
   src: string;
+  srcSet?: string;
+  thumbnailSrc?: string;
+  fullSrc?: string;
+  fullWidth?: number;
+  fullHeight?: number;
   category: string;
   categoryLabel: string;
   caption: string;
@@ -144,11 +149,19 @@ export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryP
             data-gallery-item="true"
             key={item.id}
           >
-            <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" decoding="async" />
-            <span className="hotel-gallery__item-copy">
-              <small>{item.categoryLabel}</small>
-              <strong>{item.caption}</strong>
-            </span>
+            <img
+              src={item.src}
+              srcSet={item.srcSet}
+              sizes={index === 0
+                ? "(max-width: 600px) 100vw, (max-width: 900px) 92vw, 62vw"
+                : "(max-width: 600px) 100vw, (max-width: 900px) 46vw, 31vw"}
+              alt={item.alt}
+              width={item.width}
+              height={item.height}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="hotel-gallery__item-title">{item.categoryLabel}</span>
             <span className="hotel-gallery__item-icon" aria-hidden="true">
               <Images size={18} strokeWidth={1.6} />
             </span>
@@ -192,8 +205,14 @@ export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryP
               touchStartX.current = null;
             }}
           >
-            <img src={activeItem.src} alt={activeItem.alt} width={activeItem.width} height={activeItem.height} decoding="async" />
-            <figcaption>{activeItem.caption}</figcaption>
+            <img
+              key={activeItem.id}
+              src={activeItem.fullSrc ?? activeItem.src}
+              alt={activeItem.alt}
+              width={activeItem.fullWidth ?? activeItem.width}
+              height={activeItem.fullHeight ?? activeItem.height}
+              decoding="async"
+            />
           </figure>
 
           <button className="gallery-lightbox__arrow gallery-lightbox__arrow--next" type="button" onClick={showNext} aria-label={a11y.nextPhoto}>
@@ -210,7 +229,7 @@ export function HotelGallery({ items, categories, locale = "tr" }: HotelGalleryP
                 aria-current={index === activeIndex ? "true" : undefined}
                 key={item.id}
               >
-                <img src={item.src} alt="" width={item.width} height={item.height} loading="lazy" decoding="async" />
+                <img src={item.thumbnailSrc ?? item.src} alt="" width={item.width} height={item.height} loading="lazy" decoding="async" />
               </button>
             ))}
           </div>

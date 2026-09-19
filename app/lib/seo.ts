@@ -1,4 +1,5 @@
 import { getLocaleInfo, getMessages, localizedPath, type Locale } from "./i18n";
+import { hotelImages } from "./hotel-images";
 import {
   getBookingUrl,
   mapsUrl,
@@ -34,8 +35,8 @@ function hotelEntity(locale: Locale) {
     logo: absoluteUrl("/brand/mi-hotel-logo.png"),
     image: [
       absoluteUrl("/og.png"),
-      absoluteUrl("/images/hotel-reception.webp"),
-      absoluteUrl("/images/mi-hotel-exterior.webp"),
+      absoluteUrl(hotelImages.reception.src),
+      absoluteUrl(hotelImages.exterior.src),
     ],
     address: {
       "@type": "PostalAddress",

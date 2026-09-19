@@ -1,0 +1,702 @@
+[
+  {
+    "number": 1,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-01-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-01-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-01-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-01-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 2,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-02-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-02-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-02-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-02-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 3,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-03-640.webp",
+        "width": 380,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-03-1280.webp",
+        "width": 761,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-03-1920.webp",
+        "width": 1141,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-03-full.webp",
+      "width": 3475,
+      "height": 5846
+    }
+  },
+  {
+    "number": 4,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-04-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-04-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-04-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-04-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 5,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-05-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-05-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-05-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-05-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 6,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-06-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-06-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-06-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-06-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 7,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-07-640.webp",
+        "width": 640,
+        "height": 363
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-07-1280.webp",
+        "width": 1280,
+        "height": 726
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-07-1920.webp",
+        "width": 1920,
+        "height": 1089
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-07-full.webp",
+      "width": 6240,
+      "height": 3541
+    }
+  },
+  {
+    "number": 8,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-08-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-08-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-08-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-08-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 9,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-09-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-09-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-09-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-09-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 10,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-10-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-10-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-10-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-10-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 11,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-11-640.webp",
+        "width": 640,
+        "height": 475
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-11-1280.webp",
+        "width": 1280,
+        "height": 950
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-11-1920.webp",
+        "width": 1920,
+        "height": 1425
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-11-full.webp",
+      "width": 5605,
+      "height": 4160
+    }
+  },
+  {
+    "number": 12,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-12-640.webp",
+        "width": 419,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-12-1280.webp",
+        "width": 839,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-12-1920.webp",
+        "width": 1258,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-12-full.webp",
+      "width": 4090,
+      "height": 6240
+    }
+  },
+  {
+    "number": 13,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-13-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-13-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-13-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-13-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 14,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-14-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-14-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-14-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-14-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 15,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-15-640.webp",
+        "width": 640,
+        "height": 492
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-15-1280.webp",
+        "width": 1280,
+        "height": 984
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-15-1920.webp",
+        "width": 1920,
+        "height": 1476
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-15-full.webp",
+      "width": 4861,
+      "height": 3736
+    }
+  },
+  {
+    "number": 16,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-16-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-16-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-16-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-16-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 17,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-17-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-17-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-17-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-17-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 18,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-18-640.webp",
+        "width": 640,
+        "height": 474
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-18-1280.webp",
+        "width": 1280,
+        "height": 947
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-18-1920.webp",
+        "width": 1920,
+        "height": 1421
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-18-full.webp",
+      "width": 4756,
+      "height": 3520
+    }
+  },
+  {
+    "number": 19,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-19-640.webp",
+        "width": 640,
+        "height": 474
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-19-1280.webp",
+        "width": 1280,
+        "height": 947
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-19-1920.webp",
+        "width": 1920,
+        "height": 1421
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-19-full.webp",
+      "width": 2378,
+      "height": 1760
+    }
+  },
+  {
+    "number": 20,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-20-640.webp",
+        "width": 640,
+        "height": 426
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-20-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-20-1920.webp",
+        "width": 1920,
+        "height": 1279
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-20-full.webp",
+      "width": 5056,
+      "height": 3368
+    }
+  },
+  {
+    "number": 21,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-21-640.webp",
+        "width": 640,
+        "height": 426
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-21-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-21-1920.webp",
+        "width": 1920,
+        "height": 1279
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-21-full.webp",
+      "width": 5056,
+      "height": 3368
+    }
+  },
+  {
+    "number": 22,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-22-640.webp",
+        "width": 640,
+        "height": 426
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-22-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-22-1920.webp",
+        "width": 1920,
+        "height": 1279
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-22-full.webp",
+      "width": 5056,
+      "height": 3368
+    }
+  },
+  {
+    "number": 23,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-23-640.webp",
+        "width": 640,
+        "height": 480
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-23-1280.webp",
+        "width": 1280,
+        "height": 960
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-23-1920.webp",
+        "width": 1920,
+        "height": 1440
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-23-full.webp",
+      "width": 5547,
+      "height": 4160
+    }
+  },
+  {
+    "number": 24,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-24-640.webp",
+        "width": 427,
+        "height": 640
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-24-1280.webp",
+        "width": 853,
+        "height": 1280
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-24-1920.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-24-full.webp",
+      "width": 4160,
+      "height": 6240
+    }
+  },
+  {
+    "number": 25,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-25-640.webp",
+        "width": 640,
+        "height": 462
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-25-1280.webp",
+        "width": 1280,
+        "height": 924
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-25-1920.webp",
+        "width": 1920,
+        "height": 1386
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-25-full.webp",
+      "width": 5220,
+      "height": 3768
+    }
+  },
+  {
+    "number": 26,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-26-640.webp",
+        "width": 640,
+        "height": 426
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-26-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-26-1920.webp",
+        "width": 1920,
+        "height": 1279
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-26-full.webp",
+      "width": 5056,
+      "height": 3368
+    }
+  },
+  {
+    "number": 27,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-27-640.webp",
+        "width": 640,
+        "height": 427
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-27-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-27-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-27-full.webp",
+      "width": 6240,
+      "height": 4160
+    }
+  },
+  {
+    "number": 28,
+    "variants": [
+      {
+        "src": "/images/hotel/high-res/genel-mekan-28-640.webp",
+        "width": 640,
+        "height": 426
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-28-1280.webp",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "/images/hotel/high-res/genel-mekan-28-1920.webp",
+        "width": 1920,
+        "height": 1279
+      }
+    ],
+    "full": {
+      "src": "/images/hotel/high-res/genel-mekan-28-full.webp",
+      "width": 5056,
+      "height": 3368
+    }
+  }
+]

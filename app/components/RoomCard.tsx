@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Room } from "../lib/site-data";
+import { getRoomCoverImage } from "../lib/room-images";
 
 export function RoomCard({ room, featured = false }: { room: Room; featured?: boolean }) {
   return (
     <article className={`room-card${featured ? " room-card--featured" : ""}`}>
       <div className="room-card__media">
-        <img src={room.cover} alt={`${room.name} iç mekânı`} width={1800} height={1200} loading="lazy" decoding="async" />
+        <img {...getRoomCoverImage(room.cover)} sizes="(max-width: 700px) 92vw, 46vw" alt={`${room.name} iç mekânı`} loading="lazy" decoding="async" />
         <span>{room.size}</span>
       </div>
       <div className="room-card__body">

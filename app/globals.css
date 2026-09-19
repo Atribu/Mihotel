@@ -809,7 +809,7 @@ h3 {
 .page-hero--rooms {
   background:
     linear-gradient(90deg, rgba(252, 250, 247, 0.97), rgba(252, 250, 247, 0.7)),
-    url("/images/room-family.webp") center 58% / cover;
+    url("/images/rooms/family/high-res/220-07-1920.webp") center 58% / cover;
 }
 
 .booking-panel {
@@ -1107,6 +1107,7 @@ h3 {
   min-width: 0;
   min-height: 0;
   display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   place-items: center;
   margin: 0;
   overflow: hidden;
@@ -1114,7 +1115,8 @@ h3 {
   user-select: none;
 }
 
-.gallery-lightbox__stage img {
+/* Keep lightbox images at their intrinsic size, overriding page-wide cover styles. */
+.gallery-lightbox .gallery-lightbox__stage img {
   width: auto;
   height: auto;
   max-width: 100%;
@@ -5009,6 +5011,44 @@ main {
   object-position: 53% center;
 }
 
+.reference-hero__video {
+  pointer-events: none;
+}
+
+.reference-hero__video-toggle {
+  position: absolute;
+  z-index: 3;
+  right: clamp(20px, 3vw, 48px);
+  bottom: clamp(88px, 8vw, 120px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: rgba(21, 27, 31, 0.4);
+  color: #fff;
+  cursor: pointer;
+}
+
+.reference-hero__video-toggle:hover {
+  background: rgba(21, 27, 31, 0.7);
+}
+
+.reference-hero__video-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .reference-hero__video-toggle {
+    top: 100px;
+    right: 20px;
+    bottom: auto;
+  }
+}
+
 .reference-hero__veil {
   z-index: 1;
   background:
@@ -8573,7 +8613,7 @@ html {
 .hotel-gallery__item::after {
   content: "";
   position: absolute;
-  inset: 40% 0 0;
+  inset: 60% 0 0;
   z-index: 1;
   background: linear-gradient(180deg, transparent, rgba(24, 22, 20, 0.72));
   pointer-events: none;
@@ -8597,31 +8637,19 @@ html {
   outline-offset: 3px;
 }
 
-.hotel-gallery__item-copy {
+.hotel-gallery__item-title {
   position: absolute;
-  right: 62px;
-  bottom: 22px;
-  left: 22px;
   z-index: 2;
-  display: grid;
-  gap: 4px;
+  right: 66px;
+  bottom: 24px;
+  left: 22px;
   color: #fff;
-  text-align: left;
-}
-
-.hotel-gallery__item-copy small {
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 0.64rem;
+  font-size: 0.875rem;
   font-weight: 700;
-  letter-spacing: 0.13em;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-align: left;
   text-transform: uppercase;
-}
-
-.hotel-gallery__item-copy strong {
-  font-family: var(--font-playfair), Georgia, serif;
-  font-size: clamp(1.05rem, 1.5vw, 1.42rem);
-  font-weight: 500;
-  letter-spacing: -0.015em;
 }
 
 .hotel-gallery__item-icon {
@@ -8635,30 +8663,9 @@ html {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(24, 22, 20, 0.45);
   color: #fff;
   backdrop-filter: blur(8px);
-}
-
-.hotel-gallery-lightbox .gallery-lightbox__stage {
-  position: relative;
-}
-
-.hotel-gallery-lightbox .gallery-lightbox__stage figcaption {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  max-width: calc(100% - 44px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-  background: rgba(16, 15, 14, 0.72);
-  padding: 8px 14px;
-  color: rgba(255, 255, 255, 0.84);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  text-align: center;
-  transform: translateX(-50%);
-  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
@@ -8736,17 +8743,17 @@ html {
     border-radius: 11px;
   }
 
-  .hotel-gallery__item-copy {
-    right: 58px;
-    bottom: 17px;
-    left: 17px;
-  }
-
   .hotel-gallery__item-icon {
     right: 14px;
     bottom: 14px;
     width: 36px;
     height: 36px;
+  }
+
+  .hotel-gallery__item-title {
+    right: 60px;
+    bottom: 20px;
+    left: 17px;
   }
 
   .hotel-gallery-lightbox .gallery-lightbox__topbar {

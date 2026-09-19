@@ -5,6 +5,7 @@ type ImagePageHeroProps = {
   italic: string;
   description: string;
   image: string;
+  imageSrcSet?: string;
   imageAlt: string;
   imageWidth?: number;
   imageHeight?: number;
@@ -18,6 +19,7 @@ export function ImagePageHero({
   italic,
   description,
   image,
+  imageSrcSet,
   imageAlt,
   imageWidth = 1800,
   imageHeight = 1200,
@@ -30,6 +32,8 @@ export function ImagePageHero({
       <img
         className="reference-hero__image"
         src={image}
+        srcSet={imageSrcSet}
+        sizes="100vw"
         alt={imageAlt}
         width={imageWidth}
         height={imageHeight}

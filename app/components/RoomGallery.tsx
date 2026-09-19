@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getMessages, interpolate, type Locale } from "../lib/i18n";
+import { getRoomGalleryImage } from "../lib/room-images";
 
 type RoomGalleryProps = {
   roomName: string;
@@ -61,14 +62,15 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
     };
   }, [isOpen, showNext, showPrevious]);
 
-  const activeImage = activeIndex === null ? null : images[activeIndex];
-  const inlineImage = images[inlineIndex] ?? images[0];
+  const photos = images.map(getRoomGalleryImage);
+  const activeImage = activeIndex === null ? null : photos[activeIndex];
+  const inlineImage = photos[inlineIndex] ?? photos[0];
 
   return (
     <>
       <section className="room-reference-gallery shell" aria-label={interpolate(a11y.roomPhotos, { room: roomName })} lang={locale}>
         <div className="room-reference-gallery__thumbnails" aria-label={interpolate(a11y.roomPhotos, { room: roomName })}>
-          {images.map((image, index) => (
+          {photos.map((image, index) => (
             <button
               className={index === inlineIndex ? "is-active" : undefined}
               type="button"
@@ -78,9 +80,9 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
               }}
               aria-label={interpolate(a11y.roomPhoto, { room: roomName, index: index + 1, count: images.length })}
               aria-current={index === inlineIndex ? "true" : undefined}
-              key={image}
+              key={image.src}
             >
-              <img src={image} alt="" width={2000} height={1333} loading="lazy" decoding="async" />
+              <img src={image.thumbnailSrc ?? image.src} alt="" width={image.width} height={image.height} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
@@ -93,10 +95,12 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
             aria-label={interpolate(a11y.openRoomGallery, { room: roomName, index: inlineIndex + 1 })}
           >
             <img
-              src={inlineImage}
+              src={inlineImage.src}
+              srcSet={inlineImage.srcSet}
+              sizes="(max-width: 700px) 92vw, (max-width: 1440px) 82vw, 1180px"
               alt={interpolate(a11y.roomOverview, { room: `${roomName} ${inlineIndex + 1} / ${images.length}` })}
-              width={2000}
-              height={1333}
+              width={inlineImage.width}
+              height={inlineImage.height}
               loading="eager"
               fetchPriority="high"
             />
@@ -161,10 +165,11 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
             }}
           >
             <img
-              src={activeImage}
+              key={activeImage.src}
+              src={activeImage.fullSrc ?? activeImage.src}
               alt={interpolate(a11y.roomOverview, { room: `${roomName} ${activeIndex + 1} / ${images.length}` })}
-              width={2000}
-              height={1333}
+              width={activeImage.fullWidth ?? activeImage.width}
+              height={activeImage.fullHeight ?? activeImage.height}
               decoding="async"
             />
           </figure>
@@ -174,16 +179,16 @@ export function RoomGallery({ roomName, images, locale = "tr" }: RoomGalleryProp
           </button>
 
           <div className="gallery-lightbox__thumbnails" aria-label={a11y.thumbnails}>
-            {images.map((image, index) => (
+            {photos.map((image, index) => (
               <button
                 className={index === activeIndex ? "is-active" : undefined}
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 aria-label={interpolate(a11y.showPhoto, { index: index + 1 })}
                 aria-current={index === activeIndex ? "true" : undefined}
-                key={image}
+                key={image.src}
               >
-                <img src={image} alt="" width={2000} height={1333} loading="lazy" decoding="async" />
+                <img src={image.thumbnailSrc ?? image.src} alt="" width={image.width} height={image.height} loading="lazy" decoding="async" />
               </button>
             ))}
           </div>
