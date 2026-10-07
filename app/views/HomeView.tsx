@@ -27,6 +27,7 @@ import {
 import { getRooms } from "../lib/site-data";
 import { createHomeStructuredData } from "../lib/seo";
 import { hotelImages } from "../lib/hotel-images";
+import { homeImage } from "../lib/home-images";
 import { ecoMinibarImage, familyCoverImage, getRoomCoverImage } from "../lib/room-images";
 
 const serviceVisuals = [
@@ -87,7 +88,7 @@ export function HomeView({ locale }: { locale: Locale }) {
                 return (
                   <article className="reference-experience" key={image.src}>
                     <div className="reference-experience__image">
-                      <img {...image} sizes="(max-width: 600px) 80vw, (max-width: 1000px) 40vw, 20vw" alt="" loading="lazy" decoding="async" />
+                      <img {...homeImage(image)} sizes="(max-width: 700px) calc(50vw - 22px), (max-width: 1100px) 16vw, (max-width: 1555px) 17.5vw, 272px" alt="" loading="lazy" decoding="async" />
                     </div>
                     <span className="reference-experience__icon" aria-hidden="true">
                       <Icon size={18} strokeWidth={1.45} />
@@ -107,7 +108,7 @@ export function HomeView({ locale }: { locale: Locale }) {
           <section className="reference-tour reference-gallery-promo" aria-labelledby="gallery-promo-title">
             <div className="reference-tour__image">
               <img
-                {...hotelImages.lobby}
+                {...homeImage(hotelImages.lobby)}
                 sizes="(max-width: 700px) 100vw, 70vw"
                 alt={copy.gallery.imageAlt}
                 loading="lazy"
@@ -142,7 +143,7 @@ export function HomeView({ locale }: { locale: Locale }) {
             <article className="reference-featured-room">
               <Link className="reference-featured-room__image" href={localizedPath(locale, "/odalar")}>
                 <img
-                  {...familyCoverImage}
+                  {...homeImage(familyCoverImage)}
                   sizes="(max-width: 700px) 92vw, 52vw"
                   alt={copy.rooms.imageAlt}
                   loading="lazy"
@@ -173,8 +174,8 @@ export function HomeView({ locale }: { locale: Locale }) {
                     className="reference-compact-room__image"
                   >
                     <img
-                      {...getRoomCoverImage(room.cover)}
-                      sizes="(max-width: 700px) 92vw, 25vw"
+                      {...homeImage(getRoomCoverImage(room.cover))}
+                      sizes="(max-width: 460px) calc(100vw - 34px), (max-width: 700px) calc(100vw - 42px), (max-width: 1100px) 20vw, (max-width: 1545px) 22vw, 340px"
                       alt={interpolate(messages.a11y.roomInterior, { room: room.name })}
                       loading="lazy"
                       decoding="async"
@@ -213,7 +214,7 @@ export function HomeView({ locale }: { locale: Locale }) {
         <section className="reference-about" aria-labelledby="about-title">
           <div className="reference-about__image">
             <img
-              {...hotelImages.reception}
+              {...homeImage(hotelImages.reception)}
               sizes="(max-width: 700px) 100vw, 60vw"
               alt={copy.about.imageAlt}
               loading="lazy"
@@ -246,8 +247,8 @@ export function HomeView({ locale }: { locale: Locale }) {
                 return (
                   <article key={image.src}>
                     <img
-                      {...image}
-                      sizes="(max-width: 600px) 80vw, (max-width: 1000px) 40vw, 20vw"
+                      {...homeImage(image)}
+                      sizes="(max-width: 700px) calc(50vw - 22px), (max-width: 1100px) 16vw, (max-width: 1555px) 17.5vw, 272px"
                       alt={`${item.title} — ${item.text}`}
                       loading="lazy"
                       decoding="async"

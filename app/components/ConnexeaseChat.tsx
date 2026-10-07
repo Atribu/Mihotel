@@ -26,6 +26,7 @@ declare global {
     };
     Connexease?: ConnexeaseApi;
     __miHotelConnexeaseInitialized?: boolean;
+    __miHotelConnexeaseReady?: boolean;
   }
 }
 
@@ -34,6 +35,7 @@ export function ConnexeaseChat() {
   const locale = normalizeLocale(pathname?.split("/").filter(Boolean)[0]);
   const messages = getMessages(locale);
   const [isReady, setIsReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const loadChatRef = useRef<(() => void) | null>(null);
   const pendingOpenRef = useRef(false);
@@ -44,7 +46,7 @@ export function ConnexeaseChat() {
     let injectedScript: HTMLScriptElement | null = null;
     let existingScript: HTMLScriptElement | null = null;
     let apiCheckInterval: number | null = null;
-    let fallbackTimer: number | null = null;
+    let readyTimeout: number | null = null;
     let loadStarted = false;
 
     const setChatState = (open: boolean) => {
@@ -69,15 +71,18 @@ export function ConnexeaseChat() {
     const handleReady = () => {
       if (!active) return;
 
+      window.__miHotelConnexeaseReady = true;
       const open = window.Connexease?.isOpened?.() ?? false;
       setIsReady(true);
+      setIsLoading(false);
+      if (readyTimeout !== null) window.clearTimeout(readyTimeout);
       setIsOpen(open);
       setChatState(open);
 
       if (!open && pendingOpenRef.current && window.Connexease?.open) {
-        pendingOpenRef.current = false;
         try {
           window.Connexease.open();
+          pendingOpenRef.current = false;
         } catch {
           setIsOpen(false);
           setChatState(false);
@@ -100,7 +105,7 @@ export function ConnexeaseChat() {
       }
 
       // The API may already be ready after a hot reload or client navigation.
-      if (chat.open && chat.isOpened) handleReady();
+      if (window.__miHotelConnexeaseReady) handleReady();
     };
 
     setChatState(false);
@@ -118,16 +123,41 @@ export function ConnexeaseChat() {
       window.__miHotelConnexeaseInitialized = true;
     };
 
+    const stopWaiting = () => {
+      if (!active) return;
+      setIsLoading(false);
+      if (apiCheckInterval !== null) window.clearInterval(apiCheckInterval);
+      if (readyTimeout !== null) window.clearTimeout(readyTimeout);
+      apiCheckInterval = null;
+      readyTimeout = null;
+    };
+    const handleScriptError = () => {
+      stopWaiting();
+      // A failed embed download is retryable; a slow provider Init is not.
+      loadStarted = false;
+      (injectedScript ?? existingScript)?.remove();
+      injectedScript = null;
+      existingScript = null;
+    };
+
     const loadChat = () => {
-      if (!active || loadStarted) return;
+      if (!active) return;
+      if (loadStarted) {
+        bindChatEvents();
+        return;
+      }
       loadStarted = true;
+      setIsLoading(true);
 
       apiCheckInterval = window.setInterval(bindChatEvents, 100);
+      // An unavailable chat provider must not keep polling indefinitely.
+      readyTimeout = window.setTimeout(stopWaiting, 20000);
       existingScript = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
 
       if (existingScript) {
         initializeChat();
         existingScript.addEventListener("load", initializeChat, { once: true });
+        existingScript.addEventListener("error", handleScriptError, { once: true });
         return;
       }
 
@@ -136,19 +166,23 @@ export function ConnexeaseChat() {
       injectedScript.src = SCRIPT_URL;
       injectedScript.async = true;
       injectedScript.addEventListener("load", initializeChat, { once: true });
+      injectedScript.addEventListener("error", handleScriptError, { once: true });
       document.body.appendChild(injectedScript);
     };
 
     loadChatRef.current = loadChat;
-    fallbackTimer = window.setTimeout(loadChat, 2500);
+    // Keep chat available across navigation, but don't download it on first paint.
+    bindChatEvents();
 
     return () => {
       active = false;
       if (apiCheckInterval !== null) window.clearInterval(apiCheckInterval);
-      if (fallbackTimer !== null) window.clearTimeout(fallbackTimer);
+      if (readyTimeout !== null) window.clearTimeout(readyTimeout);
       if (loadChatRef.current === loadChat) loadChatRef.current = null;
       existingScript?.removeEventListener("load", initializeChat);
+      existingScript?.removeEventListener("error", handleScriptError);
       injectedScript?.removeEventListener("load", initializeChat);
+      injectedScript?.removeEventListener("error", handleScriptError);
 
       if (eventsBound) {
         const chat = window.Connexease;
@@ -186,8 +220,10 @@ export function ConnexeaseChat() {
       lang={locale}
       aria-label={messages.a11y.chatOpen}
       title={messages.a11y.liveSupport}
-      aria-busy={!isReady}
+      aria-busy={isLoading}
       hidden={isOpen}
+      onPointerEnter={() => { if (!isReady) loadChatRef.current?.(); }}
+      onFocus={() => { if (!isReady) loadChatRef.current?.(); }}
       onClick={openChat}
     >
       <MessageCircleMore aria-hidden="true" size={28} strokeWidth={1.8} />

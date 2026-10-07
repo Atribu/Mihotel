@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 import sharp from "sharp";
 
@@ -49,6 +49,57 @@ test("server-renders the Mİ Hotel Boutique home page", async () => {
   assert.match(text, /Eco Oda/);
   assert.match(text, /Aile Odası/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
+});
+
+test("home prioritizes responsive posters without requesting video or chat during SSR", async () => {
+  for (const pathname of ["/", "/en", "/de", "/ru"]) {
+    const html = await (await render(pathname)).text();
+    const head = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
+    for (const variant of ["desktop", "mobile"]) {
+      const preload = [...head.matchAll(/<link\b[^>]*>/g)]
+        .map(([tag]) => tag).find((tag) => tag.includes(`/images/home-v1/hero-${variant}.webp`));
+      assert.ok(preload, `${pathname}: ${variant} preload in head`);
+      assert.match(preload, /rel="preload"/);
+      assert.match(preload, /fetchPriority="high"/i);
+      assert.ok(preload.includes(variant === "mobile" ? "(max-width: 700px)" : "(min-width: 701px)"));
+    }
+    const poster = [...html.matchAll(/<img\b[^>]*>/g)]
+      .map(([tag]) => tag).find((tag) => tag.includes("hero-desktop.webp"));
+    assert.ok(poster, pathname);
+    assert.match(poster, /fetchPriority="high"/i);
+    assert.match(poster, /loading="eager"/);
+    assert.match(html, /<source[^>]*media="\(max-width: 700px\)"[^>]*hero-mobile\.webp/);
+    const video = html.match(/<video\b[^>]*>/)?.[0];
+    assert.ok(video, pathname);
+    assert.match(video, /preload="none"/);
+    assert.doesNotMatch(video, /\s(?:src|autoplay)=/i);
+    assert.doesNotMatch(html, /<source\b[^>]*\.mp4/);
+    assert.doesNotMatch(html, /<script\b[^>]*src="[^"]*connexease/);
+  }
+});
+
+test("homepage delivery copies are responsive and keep media within size budgets", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../app/lib/home-image-manifest.json", import.meta.url), "utf8"));
+  assert.equal(Object.keys(manifest).length, 12);
+  for (const variants of Object.values(manifest)) {
+    assert.deepEqual(variants.map((asset) => asset.width), [320, 480, 640, 960, 1280, 1920]);
+    for (const asset of variants) {
+      const metadata = await sharp(new URL(`../public${asset.src}`, import.meta.url).pathname).metadata();
+      assert.deepEqual([metadata.width, metadata.height], [asset.width, asset.height], asset.src);
+    }
+  }
+  for (const [variant, width, height, budget] of [["desktop", 1920, 1080, 100000], ["mobile", 960, 540, 50000]]) {
+    const file = new URL(`../public/images/home-v1/hero-${variant}.webp`, import.meta.url);
+    const metadata = await sharp(file.pathname).metadata();
+    assert.deepEqual([metadata.width, metadata.height], [width, height]);
+    assert.ok((await stat(file)).size < budget, `${variant} poster budget`);
+  }
+  for (const [resolution, budget] of [[1080, 8000000], [720, 4000000]]) {
+    const file = new URL(`../public/videos/optimized-v1/home-${resolution}.mp4`, import.meta.url);
+    const buffer = await readFile(file);
+    assert.ok(buffer.length < budget, `${resolution} video budget`);
+    assert.ok(buffer.indexOf("moov") > 0 && buffer.indexOf("moov") < buffer.indexOf("mdat"), "fast-start metadata before video data");
+  }
 });
 
 test("server-renders every primary route", async () => {
@@ -215,7 +266,7 @@ test("Eco photos replace the cover, minibar and room gallery in all four languag
       assert.equal(response.status, 200, pathname);
       const html = await response.text();
       assert.ok(html.includes(`${prefix}10-1920.webp`), pathname);
-      assert.ok(html.includes(`${prefix}10-640.webp 640w`), pathname);
+      assert.ok(html.includes(suffix === "/" ? "/images/home-v1/eco-10-640.webp 640w" : `${prefix}10-640.webp 640w`), pathname);
       assert.doesNotMatch(html, /\/images\/room-eco(?:-detail)?\.webp/);
       assert.doesNotMatch(html, /\/images\/rooms\/eco\/105-\d+\.webp/);
       assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
@@ -269,7 +320,7 @@ test("Triple photos replace the cover and room gallery in all four languages", a
       assert.equal(response.status, 200, pathname);
       const html = await response.text();
       assert.ok(html.includes(`${prefix}04-1920.webp`), pathname);
-      assert.ok(html.includes(`${prefix}04-640.webp 640w`), pathname);
+      assert.ok(html.includes(suffix === "/" ? "/images/home-v1/triple-4-640.webp 640w" : `${prefix}04-640.webp 640w`), pathname);
       assert.doesNotMatch(html, /\/images\/room-triple(?:-detail)?\.webp/);
       assert.doesNotMatch(html, /\/images\/rooms\/triple\/221-\d+\.webp/);
       assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
@@ -322,7 +373,7 @@ test("Double photos replace the cover and room gallery in all four languages", a
       assert.equal(response.status, 200, pathname);
       const html = await response.text();
       assert.ok(html.includes(`${prefix}01-1920.webp`), pathname);
-      assert.ok(html.includes(`${prefix}01-640.webp 640w`), pathname);
+      assert.ok(html.includes(suffix === "/" ? "/images/home-v1/double-1-640.webp 640w" : `${prefix}01-640.webp 640w`), pathname);
       assert.doesNotMatch(html, /\/images\/room-double(?:-detail)?\.webp/);
       assert.doesNotMatch(html, /\/images\/rooms\/double\/225-\d+\.webp/);
       assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);
@@ -375,7 +426,7 @@ test("Family photos replace the cover, featured images and room gallery in all f
       assert.equal(response.status, 200, pathname);
       const html = await response.text();
       assert.ok(html.includes(`${prefix}07-1920.webp`), pathname);
-      assert.ok(html.includes(`${prefix}07-640.webp 640w`), pathname);
+      assert.ok(html.includes(suffix === "/" ? "/images/home-v1/family-7-640.webp 640w" : `${prefix}07-640.webp 640w`), pathname);
       assert.doesNotMatch(html, /\/images\/room-family(?:-(?:detail|bath))?\.webp/);
       assert.doesNotMatch(html, /\/images\/rooms\/family\/107-\d+\.webp/);
       assert.doesNotMatch(html, /<img\b[^>]*src="[^"]*-full\.webp"/);

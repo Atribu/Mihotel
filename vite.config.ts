@@ -48,7 +48,8 @@ export default defineConfig(async () => {
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
     plugins: [
-      vinext(),
+      // Emit gzip/Brotli variants so vinext start can serve compressed CSS/JS.
+      vinext({ precompress: true }),
       sites(),
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },

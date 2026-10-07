@@ -1,0 +1,386 @@
+{
+  "/images/hotel/high-res/genel-mekan-07-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-7-320.webp",
+      "width": 320,
+      "height": 182
+    },
+    {
+      "src": "/images/home-v1/hotel-7-480.webp",
+      "width": 480,
+      "height": 272
+    },
+    {
+      "src": "/images/home-v1/hotel-7-640.webp",
+      "width": 640,
+      "height": 363
+    },
+    {
+      "src": "/images/home-v1/hotel-7-960.webp",
+      "width": 960,
+      "height": 545
+    },
+    {
+      "src": "/images/home-v1/hotel-7-1280.webp",
+      "width": 1280,
+      "height": 726
+    },
+    {
+      "src": "/images/home-v1/hotel-7-1920.webp",
+      "width": 1920,
+      "height": 1090
+    }
+  ],
+  "/images/hotel/high-res/genel-mekan-09-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-9-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/hotel-9-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/hotel-9-640.webp",
+      "width": 640,
+      "height": 427
+    },
+    {
+      "src": "/images/home-v1/hotel-9-960.webp",
+      "width": 960,
+      "height": 640
+    },
+    {
+      "src": "/images/home-v1/hotel-9-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/hotel-9-1920.webp",
+      "width": 1920,
+      "height": 1280
+    }
+  ],
+  "/images/hotel/high-res/genel-mekan-11-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-11-320.webp",
+      "width": 320,
+      "height": 238
+    },
+    {
+      "src": "/images/home-v1/hotel-11-480.webp",
+      "width": 480,
+      "height": 356
+    },
+    {
+      "src": "/images/home-v1/hotel-11-640.webp",
+      "width": 640,
+      "height": 475
+    },
+    {
+      "src": "/images/home-v1/hotel-11-960.webp",
+      "width": 960,
+      "height": 713
+    },
+    {
+      "src": "/images/home-v1/hotel-11-1280.webp",
+      "width": 1280,
+      "height": 950
+    },
+    {
+      "src": "/images/home-v1/hotel-11-1920.webp",
+      "width": 1920,
+      "height": 1425
+    }
+  ],
+  "/images/hotel/high-res/genel-mekan-14-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-14-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/hotel-14-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/hotel-14-640.webp",
+      "width": 640,
+      "height": 427
+    },
+    {
+      "src": "/images/home-v1/hotel-14-960.webp",
+      "width": 960,
+      "height": 640
+    },
+    {
+      "src": "/images/home-v1/hotel-14-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/hotel-14-1920.webp",
+      "width": 1920,
+      "height": 1280
+    }
+  ],
+  "/images/hotel/high-res/genel-mekan-18-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-18-320.webp",
+      "width": 320,
+      "height": 237
+    },
+    {
+      "src": "/images/home-v1/hotel-18-480.webp",
+      "width": 480,
+      "height": 355
+    },
+    {
+      "src": "/images/home-v1/hotel-18-640.webp",
+      "width": 640,
+      "height": 474
+    },
+    {
+      "src": "/images/home-v1/hotel-18-960.webp",
+      "width": 960,
+      "height": 711
+    },
+    {
+      "src": "/images/home-v1/hotel-18-1280.webp",
+      "width": 1280,
+      "height": 947
+    },
+    {
+      "src": "/images/home-v1/hotel-18-1920.webp",
+      "width": 1920,
+      "height": 1421
+    }
+  ],
+  "/images/hotel/high-res/genel-mekan-21-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-21-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/hotel-21-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/hotel-21-640.webp",
+      "width": 640,
+      "height": 426
+    },
+    {
+      "src": "/images/home-v1/hotel-21-960.webp",
+      "width": 960,
+      "height": 639
+    },
+    {
+      "src": "/images/home-v1/hotel-21-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/hotel-21-1920.webp",
+      "width": 1920,
+      "height": 1279
+    }
+  ],
+  "/images/hotel/high-res/genel-mekan-26-1920.webp": [
+    {
+      "src": "/images/home-v1/hotel-26-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/hotel-26-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/hotel-26-640.webp",
+      "width": 640,
+      "height": 426
+    },
+    {
+      "src": "/images/home-v1/hotel-26-960.webp",
+      "width": 960,
+      "height": 639
+    },
+    {
+      "src": "/images/home-v1/hotel-26-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/hotel-26-1920.webp",
+      "width": 1920,
+      "height": 1279
+    }
+  ],
+  "/images/rooms/eco/high-res/105-09-1920.webp": [
+    {
+      "src": "/images/home-v1/eco-9-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/eco-9-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/eco-9-640.webp",
+      "width": 640,
+      "height": 427
+    },
+    {
+      "src": "/images/home-v1/eco-9-960.webp",
+      "width": 960,
+      "height": 640
+    },
+    {
+      "src": "/images/home-v1/eco-9-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/eco-9-1920.webp",
+      "width": 1920,
+      "height": 1280
+    }
+  ],
+  "/images/rooms/eco/high-res/105-10-1920.webp": [
+    {
+      "src": "/images/home-v1/eco-10-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/eco-10-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/eco-10-640.webp",
+      "width": 640,
+      "height": 427
+    },
+    {
+      "src": "/images/home-v1/eco-10-960.webp",
+      "width": 960,
+      "height": 640
+    },
+    {
+      "src": "/images/home-v1/eco-10-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/eco-10-1920.webp",
+      "width": 1920,
+      "height": 1280
+    }
+  ],
+  "/images/rooms/double/high-res/207-01-1920.webp": [
+    {
+      "src": "/images/home-v1/double-1-320.webp",
+      "width": 320,
+      "height": 251
+    },
+    {
+      "src": "/images/home-v1/double-1-480.webp",
+      "width": 480,
+      "height": 376
+    },
+    {
+      "src": "/images/home-v1/double-1-640.webp",
+      "width": 640,
+      "height": 502
+    },
+    {
+      "src": "/images/home-v1/double-1-960.webp",
+      "width": 960,
+      "height": 753
+    },
+    {
+      "src": "/images/home-v1/double-1-1280.webp",
+      "width": 1280,
+      "height": 1004
+    },
+    {
+      "src": "/images/home-v1/double-1-1920.webp",
+      "width": 1920,
+      "height": 1506
+    }
+  ],
+  "/images/rooms/triple/high-res/202-04-1920.webp": [
+    {
+      "src": "/images/home-v1/triple-4-320.webp",
+      "width": 320,
+      "height": 213
+    },
+    {
+      "src": "/images/home-v1/triple-4-480.webp",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "src": "/images/home-v1/triple-4-640.webp",
+      "width": 640,
+      "height": 427
+    },
+    {
+      "src": "/images/home-v1/triple-4-960.webp",
+      "width": 960,
+      "height": 640
+    },
+    {
+      "src": "/images/home-v1/triple-4-1280.webp",
+      "width": 1280,
+      "height": 853
+    },
+    {
+      "src": "/images/home-v1/triple-4-1920.webp",
+      "width": 1920,
+      "height": 1280
+    }
+  ],
+  "/images/rooms/family/high-res/220-07-1920.webp": [
+    {
+      "src": "/images/home-v1/family-7-320.webp",
+      "width": 320,
+      "height": 193
+    },
+    {
+      "src": "/images/home-v1/family-7-480.webp",
+      "width": 480,
+      "height": 289
+    },
+    {
+      "src": "/images/home-v1/family-7-640.webp",
+      "width": 640,
+      "height": 386
+    },
+    {
+      "src": "/images/home-v1/family-7-960.webp",
+      "width": 960,
+      "height": 579
+    },
+    {
+      "src": "/images/home-v1/family-7-1280.webp",
+      "width": 1280,
+      "height": 771
+    },
+    {
+      "src": "/images/home-v1/family-7-1920.webp",
+      "width": 1920,
+      "height": 1157
+    }
+  ]
+}

@@ -3081,15 +3081,15 @@ h3 {
 }
 
 .site-header--overlay .header-booking {
-  border-color: var(--gold);
-  background: var(--gold);
+  border-color: #8a642d;
+  background: #8a642d;
   color: var(--white);
 }
 
 .site-header--overlay .header-booking:hover,
 .site-header--overlay .header-booking:focus-visible {
-  border-color: #d2b479;
-  background: #d2b479;
+  border-color: #765425;
+  background: #765425;
 }
 
 .site-header--overlay .nav-dropdown__menu a {
@@ -4182,7 +4182,7 @@ main {
 }
 
 .site-footer__contact a {
-  color: var(--gold-dark);
+  color: var(--muted);
   font-weight: 700;
 }
 
@@ -4938,7 +4938,7 @@ main {
 
 .reference-kicker {
   margin: 0 0 8px;
-  color: #ad8849;
+  color: #836333;
   font-size: 0.58rem;
   font-weight: 700;
   letter-spacing: 0.24em;
@@ -4977,7 +4977,7 @@ main {
 }
 
 .reference-button--gold {
-  background: #b88b47;
+  background: #8a642d;
   color: #fff;
   box-shadow: 0 7px 16px rgba(103, 76, 48, 0.18);
 }
@@ -5013,6 +5013,12 @@ main {
 
 .reference-hero__video {
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.reference-hero__video--visible {
+  opacity: 1;
 }
 
 .reference-hero__video-toggle {
@@ -5267,7 +5273,7 @@ main {
 
 .reference-tour__copy > p:not(.reference-kicker) {
   margin: 14px 0 17px;
-  color: #756d68;
+  color: var(--muted);
   font-size: 0.72rem;
   line-height: 1.55;
 }
@@ -5454,7 +5460,7 @@ main {
 }
 
 .reference-perk small {
-  color: #7a726c;
+  color: var(--muted);
   font-size: 0.57rem;
 }
 
@@ -8145,15 +8151,15 @@ html {
 }
 
 .site-header:not(.site-header--overlay) .header-booking {
-  border-color: #b88b47;
-  background: #b88b47;
+  border-color: #8a642d;
+  background: #8a642d;
   color: #fff;
 }
 
 .site-header:not(.site-header--overlay) .header-booking:hover,
 .site-header:not(.site-header--overlay) .header-booking:focus-visible {
-  border-color: #a47a3e;
-  background: #a47a3e;
+  border-color: #765425;
+  background: #765425;
   color: #fff;
 }
 
